@@ -1,0 +1,56 @@
+import { Assignment, Course } from '@/types';
+
+type Props = {
+  assignment: Assignment;
+  course?: Course;
+};
+
+const statusConfig = {
+  pending: { label: '未提出', className: 'bg-yellow-100 text-yellow-800' },
+  submitted: { label: '提出済み', className: 'bg-green-100 text-green-800' },
+  overdue: { label: '期限切れ', className: 'bg-red-100 text-red-800' },
+};
+
+function formatDueDate(date: Date): string {
+  const now = new Date();
+  const diff = Math.ceil((date.getTime() - now.getTime()) / 86400000);
+  const dateStr = `${date.getMonth() + 1}/${date.getDate()}`;
+  if (diff < 0) return `${dateStr} (${Math.abs(diff)}日超過)`;
+  if (diff === 0) return `${dateStr} (本日)`;
+  if (diff === 1) return `${dateStr} (明日)`;
+  return `${dateStr} (あと${diff}日)`;
+}
+
+export default function AssignmentCard({ assignment, course }: Props) {
+  const now = new Date();
+  const daysUntilDue = Math.ceil((assignment.dueDate.getTime() - now.getTime()) / 86400000);
+  const isUrgent = assignment.status === 'pending' && daysUntilDue <= 3 && daysUntilDue >= 0;
+  const config = statusConfig[assignment.status];
+
+  return (
+    <div className="bg-white rounded-xl shadow-sm p-4">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1">
+            {course && (
+              <span
+                className="text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0"
+                style={{ backgroundColor: `${course.color}20`, color: course.color }}
+              >
+                {course.name}
+              </span>
+            )}
+            {isUrgent && (
+              <span className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
+            )}
+          </div>
+          <h3 className="font-bold text-gray-900 text-sm leading-tight">{assignment.title}</h3>
+          <p className="text-xs text-gray-500 mt-1">締切: {formatDueDate(assignment.dueDate)}</p>
+        </div>
+        <span className={`text-xs px-2 py-1 rounded-full font-medium flex-shrink-0 ${config.className}`}>
+          {config.label}
+        </span>
+      </div>
+    </div>
+  );
+}
