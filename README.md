@@ -29,6 +29,28 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Basic認証（開発中アプリの簡易アクセス制限）
+
+このアプリは開発中のため、`middleware.ts` でアプリ全体にBasic認証をかけています。
+認証情報はコードに直書きせず、環境変数で管理します。
+
+ローカル環境では `.env.local` に以下を設定してください（`.env.local.example` を参考にしてください）。
+
+```bash
+BASIC_AUTH_USER=admin
+BASIC_AUTH_PASSWORD=任意のパスワード
+```
+
+`.env.local` は `.gitignore` で除外されているため、GitHubにはアップロードされません。
+
+Vercelにデプロイする場合は、Vercelダッシュボードの **Settings > Environment Variables** に同じ
+`BASIC_AUTH_USER` / `BASIC_AUTH_PASSWORD` を設定してください。
+
+`BASIC_AUTH_USER` または `BASIC_AUTH_PASSWORD` が未設定の場合、Basic認証はスキップされます
+（ローカルで環境変数を設定し忘れた場合に誤ってアプリ全体をロックしないための挙動です）。
+
+本格運用時は、このBasic認証を大学アカウント連携やOAuth認証に置き換えることを想定しています。
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
