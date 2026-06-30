@@ -6,14 +6,21 @@ export type University = {
   lmsName: string;
   themeColor: string;
   logoInitials: string;
+  loginUrl: string;
+  supportStatus: 'supported' | 'coming-soon';
 };
 
 export type ConnectionStatus = 'disconnected' | 'connecting' | 'connected';
 
+export type SyncErrorType = null | 'auth-expired' | 'network' | 'unknown';
+
 export type PortalConnection = {
+  userId: string;
   universityId: string;
   status: ConnectionStatus;
   lastSynced: Date | null;
+  syncError: SyncErrorType;
+  isSyncing: boolean;
 };
 
 export type Course = {
@@ -25,6 +32,7 @@ export type Course = {
   format: 'in-person' | 'online' | 'hybrid';
   color: string;
   credits: number;
+  lmsUrl: string;
 };
 
 export type TimetableSlot = {
@@ -36,6 +44,8 @@ export type TimetableSlot = {
 
 export type AssignmentStatus = 'pending' | 'submitted' | 'overdue';
 
+export type AssignmentPriority = 'low' | 'normal' | 'high';
+
 export type Assignment = {
   id: string;
   courseId: string;
@@ -43,7 +53,11 @@ export type Assignment = {
   dueDate: Date;
   status: AssignmentStatus;
   description?: string;
+  assignmentUrl: string;
+  priority: AssignmentPriority;
 };
+
+export type AnnouncementSource = 'university-portal' | 'lms';
 
 export type Announcement = {
   id: string;
@@ -52,7 +66,19 @@ export type Announcement = {
   content: string;
   date: Date;
   isImportant: boolean;
-  source: 'portal' | 'lms';
+  source: AnnouncementSource;
+};
+
+export type SyncResult = 'success' | 'partial' | 'failed';
+
+export type SyncLog = {
+  id: string;
+  timestamp: Date;
+  result: SyncResult;
+  coursesFetched: number;
+  assignmentsFetched: number;
+  announcementsFetched: number;
+  errorMessage?: string;
 };
 
 export type SyncStatus = {

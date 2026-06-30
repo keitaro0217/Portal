@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Course } from '@/types';
 
 type Props = {
@@ -13,7 +14,10 @@ const formatLabels: Record<string, string> = {
 
 export default function CourseCard({ course, period }: Props) {
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4 flex items-start gap-3">
+    <Link
+      href={`/timetable/${course.id}`}
+      className="bg-white rounded-xl shadow-sm p-4 flex items-start gap-3 hover:bg-gray-50 transition-colors"
+    >
       <div
         className="w-1 self-stretch rounded-full flex-shrink-0"
         style={{ backgroundColor: course.color }}
@@ -37,6 +41,6 @@ export default function CourseCard({ course, period }: Props) {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

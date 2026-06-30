@@ -25,10 +25,18 @@ export default function AssignmentCard({ assignment, course }: Props) {
   const now = new Date();
   const daysUntilDue = Math.ceil((assignment.dueDate.getTime() - now.getTime()) / 86400000);
   const isUrgent = assignment.status === 'pending' && daysUntilDue <= 3 && daysUntilDue >= 0;
+  const isHighlighted = isUrgent || assignment.status === 'overdue';
   const config = statusConfig[assignment.status];
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4">
+    <div
+      className="bg-white rounded-xl shadow-sm p-4"
+      style={
+        isHighlighted
+          ? { borderLeft: '4px solid #EF4444', backgroundColor: '#FEF2F2' }
+          : undefined
+      }
+    >
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
@@ -51,6 +59,14 @@ export default function AssignmentCard({ assignment, course }: Props) {
           {config.label}
         </span>
       </div>
+      <a
+        href={assignment.assignmentUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700"
+      >
+        開く ↗
+      </a>
     </div>
   );
 }

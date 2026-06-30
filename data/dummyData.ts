@@ -1,4 +1,4 @@
-import { University, Course, TimetableSlot, Assignment, Announcement } from '@/types';
+import { University, Course, TimetableSlot, Assignment, Announcement, SyncLog, AssignmentPriority } from '@/types';
 
 export const universities: University[] = [
   {
@@ -9,6 +9,8 @@ export const universities: University[] = [
     lmsName: 'Keio SFC GIGA',
     themeColor: '#003366',
     logoInitials: 'KO',
+    loginUrl: 'https://keio.jp/login',
+    supportStatus: 'supported',
   },
   {
     id: 'waseda',
@@ -18,6 +20,8 @@ export const universities: University[] = [
     lmsName: 'Waseda Moodle',
     themeColor: '#8B0000',
     logoInitials: 'WD',
+    loginUrl: 'https://waseda.jp/login',
+    supportStatus: 'coming-soon',
   },
   {
     id: 'meiji',
@@ -27,6 +31,8 @@ export const universities: University[] = [
     lmsName: 'Meiji Moodle',
     themeColor: '#003399',
     logoInitials: 'MJ',
+    loginUrl: 'https://meiji.jp/login',
+    supportStatus: 'coming-soon',
   },
   {
     id: 'aoyama',
@@ -36,6 +42,8 @@ export const universities: University[] = [
     lmsName: 'AGU Course Web',
     themeColor: '#006400',
     logoInitials: 'AG',
+    loginUrl: 'https://aoyama.jp/login',
+    supportStatus: 'coming-soon',
   },
   {
     id: 'todai',
@@ -45,6 +53,8 @@ export const universities: University[] = [
     lmsName: 'ITC-LMS',
     themeColor: '#7B0000',
     logoInitials: 'UT',
+    loginUrl: 'https://todai.jp/login',
+    supportStatus: 'coming-soon',
   },
 ];
 
@@ -58,6 +68,7 @@ export const courses: Course[] = [
     format: 'in-person',
     color: '#4F46E5',
     credits: 2,
+    lmsUrl: 'https://kc7.kibanapp.jp/courses/10001',
   },
   {
     id: 'c2',
@@ -68,6 +79,7 @@ export const courses: Course[] = [
     format: 'in-person',
     color: '#0891B2',
     credits: 2,
+    lmsUrl: 'https://kc7.kibanapp.jp/courses/10002',
   },
   {
     id: 'c3',
@@ -78,6 +90,7 @@ export const courses: Course[] = [
     format: 'hybrid',
     color: '#059669',
     credits: 2,
+    lmsUrl: 'https://kc7.kibanapp.jp/courses/10003',
   },
   {
     id: 'c4',
@@ -88,6 +101,7 @@ export const courses: Course[] = [
     format: 'in-person',
     color: '#DC2626',
     credits: 1,
+    lmsUrl: 'https://kc7.kibanapp.jp/courses/10004',
   },
   {
     id: 'c5',
@@ -98,6 +112,7 @@ export const courses: Course[] = [
     format: 'online',
     color: '#7C3AED',
     credits: 2,
+    lmsUrl: 'https://kc7.kibanapp.jp/courses/10005',
   },
   {
     id: 'c6',
@@ -108,6 +123,7 @@ export const courses: Course[] = [
     format: 'in-person',
     color: '#D97706',
     credits: 2,
+    lmsUrl: 'https://kc7.kibanapp.jp/courses/10006',
   },
 ];
 
@@ -127,7 +143,14 @@ export const timetableSlots: TimetableSlot[] = [
 const now = new Date();
 const daysFromNow = (d: number) => new Date(now.getTime() + d * 86400000);
 
-export const assignments: Assignment[] = [
+const priorityFor = (dueDate: Date, status: 'pending' | 'submitted' | 'overdue'): AssignmentPriority => {
+  if (status === 'overdue') return 'high';
+  const diff = Math.ceil((dueDate.getTime() - now.getTime()) / 86400000);
+  if (status === 'pending' && diff <= 3) return 'high';
+  return 'normal';
+};
+
+const rawAssignments: Omit<Assignment, 'assignmentUrl' | 'priority'>[] = [
   {
     id: 'a1',
     courseId: 'c1',
@@ -194,6 +217,12 @@ export const assignments: Assignment[] = [
   },
 ];
 
+export const assignments: Assignment[] = rawAssignments.map((a) => ({
+  ...a,
+  assignmentUrl: `https://kc7.kibanapp.jp/courses/${a.courseId}/assignments/${a.id}`,
+  priority: priorityFor(a.dueDate, a.status),
+}));
+
 export const announcements: Announcement[] = [
   {
     id: 'an1',
@@ -201,7 +230,7 @@ export const announcements: Announcement[] = [
     content: '前期末試験の時間割が確定しました。各自KeioCNSポータルよりご確認ください。試験期間は7月20日（月）〜7月31日（木）となります。',
     date: daysFromNow(-1),
     isImportant: true,
-    source: 'portal',
+    source: 'university-portal',
   },
   {
     id: 'an2',
@@ -227,7 +256,7 @@ export const announcements: Announcement[] = [
     content: '2026年度の学生証更新手続きを5月1日より開始します。手続き方法についてはポータルサイトをご確認ください。',
     date: daysFromNow(-3),
     isImportant: false,
-    source: 'portal',
+    source: 'university-portal',
   },
   {
     id: 'an5',
@@ -244,7 +273,7 @@ export const announcements: Announcement[] = [
     content: '慶應義塾大学独自奨学金（給付型）の申請締め切りは6月30日です。申請書類はポータルよりダウンロードし、学生センターへ提出してください。',
     date: daysFromNow(-5),
     isImportant: true,
-    source: 'portal',
+    source: 'university-portal',
   },
   {
     id: 'an7',
@@ -261,6 +290,50 @@ export const announcements: Announcement[] = [
     content: '7月1日より試験期間中の特別延長開館を実施します。平日は22:00まで、土曜日は20:00まで開館します。詳細は図書館ウェブサイトをご確認ください。',
     date: daysFromNow(-7),
     isImportant: false,
-    source: 'portal',
+    source: 'university-portal',
+  },
+];
+
+export const dummySyncLogs: SyncLog[] = [
+  {
+    id: 'sl1',
+    timestamp: daysFromNow(-0.04),
+    result: 'success',
+    coursesFetched: courses.length,
+    assignmentsFetched: assignments.length,
+    announcementsFetched: announcements.length,
+  },
+  {
+    id: 'sl2',
+    timestamp: daysFromNow(-1),
+    result: 'success',
+    coursesFetched: courses.length,
+    assignmentsFetched: assignments.length,
+    announcementsFetched: announcements.length,
+  },
+  {
+    id: 'sl3',
+    timestamp: daysFromNow(-2),
+    result: 'partial',
+    coursesFetched: courses.length,
+    assignmentsFetched: assignments.length - 2,
+    announcementsFetched: announcements.length,
+    errorMessage: '一部の課題データの取得がタイムアウトしました。',
+  },
+  {
+    id: 'sl4',
+    timestamp: daysFromNow(-3),
+    result: 'success',
+    coursesFetched: courses.length,
+    assignmentsFetched: assignments.length,
+    announcementsFetched: announcements.length,
+  },
+  {
+    id: 'sl5',
+    timestamp: daysFromNow(-4),
+    result: 'success',
+    coursesFetched: courses.length,
+    assignmentsFetched: assignments.length,
+    announcementsFetched: announcements.length,
   },
 ];

@@ -5,7 +5,7 @@ import { usePortal } from '@/store/portalStore';
 import { universities } from '@/data/dummyData';
 
 export default function ConnectionCard() {
-  const { state, startConnection, completeConnection, resetConnection } = usePortal();
+  const { state, startConnection, completeConnection, disconnect } = usePortal();
   const [showModal, setShowModal] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +28,7 @@ export default function ConnectionCard() {
   };
 
   const handleDisconnect = () => {
-    resetConnection();
+    disconnect();
   };
 
   if (state.connectionStatus === 'connected') {
@@ -55,7 +55,7 @@ export default function ConnectionCard() {
           onClick={handleDisconnect}
           className="mt-3 w-full py-2 rounded-lg text-sm font-medium text-gray-600 border border-gray-200 hover:bg-gray-50 transition-colors"
         >
-          接続を解除する
+          連携を解除
         </button>
       </div>
     );

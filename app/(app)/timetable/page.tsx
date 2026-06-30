@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { usePortal } from '@/store/portalStore';
 import { universities } from '@/data/dummyData';
 
@@ -57,27 +58,36 @@ export default function TimetablePage() {
                 const course = slot ? courses.find((c) => c.id === slot.courseId) : null;
                 const isToday = day === todayDow;
 
+                const cellStyle = {
+                  backgroundColor: course ? `${course.color}18` : isToday ? '#F3F4F6' : '#F9FAFB',
+                  border: course ? `1.5px solid ${course.color}40` : '1.5px solid transparent',
+                };
+
+                if (!course) {
+                  return (
+                    <div
+                      key={day}
+                      className="rounded-lg p-1.5 min-h-[64px] flex flex-col justify-center"
+                      style={cellStyle}
+                    />
+                  );
+                }
+
                 return (
-                  <div
+                  <Link
                     key={day}
+                    href={`/timetable/${course.id}`}
                     className="rounded-lg p-1.5 min-h-[64px] flex flex-col justify-center"
-                    style={{
-                      backgroundColor: course ? `${course.color}18` : isToday ? '#F3F4F6' : '#F9FAFB',
-                      border: course ? `1.5px solid ${course.color}40` : '1.5px solid transparent',
-                    }}
+                    style={cellStyle}
                   >
-                    {course && (
-                      <>
-                        <p
-                          className="text-[10px] font-bold leading-tight"
-                          style={{ color: course.color }}
-                        >
-                          {course.name}
-                        </p>
-                        <p className="text-[9px] text-gray-500 mt-0.5 leading-tight">{course.room}</p>
-                      </>
-                    )}
-                  </div>
+                    <p
+                      className="text-[10px] font-bold leading-tight"
+                      style={{ color: course.color }}
+                    >
+                      {course.name}
+                    </p>
+                    <p className="text-[9px] text-gray-500 mt-0.5 leading-tight">{course.room}</p>
+                  </Link>
                 );
               })}
             </div>

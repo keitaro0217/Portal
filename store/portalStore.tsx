@@ -1,8 +1,15 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
-import { ConnectionStatus, SyncStatus } from '@/types';
-import { universities, courses, timetableSlots, assignments, announcements } from '@/data/dummyData';
+import { ConnectionStatus, SyncStatus, SyncLog } from '@/types';
+import {
+  universities,
+  courses,
+  timetableSlots,
+  assignments,
+  announcements,
+  dummySyncLogs,
+} from '@/data/dummyData';
 import type { University, Course, TimetableSlot, Assignment, Announcement } from '@/types';
 
 type State = {
@@ -14,6 +21,7 @@ type State = {
   assignments: Assignment[];
   announcements: Announcement[];
   syncStatus: SyncStatus;
+  syncLogs: SyncLog[];
 };
 
 type Action =
@@ -38,6 +46,7 @@ const initialState: State = {
     lastSyncTime: new Date(Date.now() - 3600000),
     message: '同期完了',
   },
+  syncLogs: dummySyncLogs,
 };
 
 function reducer(state: State, action: Action): State {
@@ -73,10 +82,19 @@ function reducer(state: State, action: Action): State {
       };
     case 'COMPLETE_SYNC': {
       const now = new Date();
+      const newLog: SyncLog = {
+        id: `sl-${now.getTime()}`,
+        timestamp: now,
+        result: 'success',
+        coursesFetched: state.courses.length,
+        assignmentsFetched: state.assignments.length,
+        announcementsFetched: state.announcements.length,
+      };
       return {
         ...state,
         lastSynced: now,
         syncStatus: { isSyncing: false, lastSyncTime: now, message: '同期完了' },
+        syncLogs: [newLog, ...state.syncLogs],
       };
     }
     case 'HYDRATE':
@@ -93,6 +111,7 @@ type ContextValue = {
   startConnection: () => void;
   completeConnection: () => void;
   resetConnection: () => void;
+  disconnect: () => void;
   sync: () => void;
 };
 
@@ -120,6 +139,12 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
                     : null,
                 }
               : initialState.syncStatus,
+            syncLogs: Array.isArray(parsed.syncLogs)
+              ? parsed.syncLogs.map((log: SyncLog) => ({
+                  ...log,
+                  timestamp: new Date(log.timestamp),
+                }))
+              : initialState.syncLogs,
           },
         });
       } catch {}
@@ -134,9 +159,10 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
         connectionStatus: state.connectionStatus,
         lastSynced: state.lastSynced,
         syncStatus: state.syncStatus,
+        syncLogs: state.syncLogs,
       })
     );
-  }, [state.selectedUniversityId, state.connectionStatus, state.lastSynced, state.syncStatus]);
+  }, [state.selectedUniversityId, state.connectionStatus, state.lastSynced, state.syncStatus, state.syncLogs]);
 
   const selectUniversity = (id: string) => dispatch({ type: 'SELECT_UNIVERSITY', universityId: id });
 
@@ -146,14 +172,25 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
 
   const resetConnection = () => dispatch({ type: 'RESET_CONNECTION' });
 
+  const disconnect = () => dispatch({ type: 'RESET_CONNECTION' });
+
   const sync = () => {
     dispatch({ type: 'START_SYNC' });
-    setTimeout(() => dispatch({ type: 'COMPLETE_SYNC' }), 2000);
+    setTimeout(() => dispatch({ type: 'COMPLETE_SYNC' }), 1800);
   };
 
   return (
     <PortalContext.Provider
-      value={{ state, universities, selectUniversity, startConnection, completeConnection, resetConnection, sync }}
+      value={{
+        state,
+        universities,
+        selectUniversity,
+        startConnection,
+        completeConnection,
+        resetConnection,
+        disconnect,
+        sync,
+      }}
     >
       {children}
     </PortalContext.Provider>

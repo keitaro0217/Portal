@@ -16,7 +16,14 @@ function formatDate(date: Date): string {
 
 export default function AnnouncementCard({ announcement, course }: Props) {
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4">
+    <div
+      className="bg-white rounded-xl shadow-sm p-4"
+      style={
+        announcement.isImportant
+          ? { borderLeft: '4px solid #F59E0B', backgroundColor: '#FFFBEB' }
+          : undefined
+      }
+    >
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex flex-wrap items-center gap-1.5">
           {announcement.isImportant && (
@@ -26,12 +33,12 @@ export default function AnnouncementCard({ announcement, course }: Props) {
           )}
           <span
             className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-              announcement.source === 'portal'
+              announcement.source === 'university-portal'
                 ? 'bg-blue-100 text-blue-700'
                 : 'bg-purple-100 text-purple-700'
             }`}
           >
-            {announcement.source === 'portal' ? 'ポータル' : 'LMS'}
+            {announcement.source === 'university-portal' ? 'ポータル' : 'LMS'}
           </span>
           {course && (
             <span
