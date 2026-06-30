@@ -7,8 +7,9 @@ import AssignmentCard from '@/components/AssignmentCard';
 import AnnouncementCard from '@/components/AnnouncementCard';
 
 export default function HomePage() {
-  const { state, sync } = usePortal();
+  const { state, sync, exportCalendar } = usePortal();
   const { courses, timetableSlots, assignments, announcements, syncStatus, lastSynced } = state;
+  const isExportingCalendar = state.calendarConnectionStatus === 'preparing';
 
   const university = universities.find((u) => u.id === state.selectedUniversityId);
   const themeColor = university?.themeColor ?? '#003366';
@@ -69,6 +70,13 @@ export default function HomePage() {
             {syncStatus.isSyncing ? '同期中...' : '今すぐ同期'}
           </button>
         </div>
+        <button
+          onClick={() => exportCalendar('all')}
+          disabled={isExportingCalendar}
+          className="mt-3 w-full bg-white/20 hover:bg-white/30 disabled:opacity-50 transition-colors px-3 py-2 rounded-xl text-xs font-medium"
+        >
+          {isExportingCalendar ? 'カレンダーに追加中...' : 'カレンダーに追加'}
+        </button>
       </div>
 
       <section>

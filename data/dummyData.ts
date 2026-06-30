@@ -1,4 +1,4 @@
-import { University, Course, TimetableSlot, Assignment, Announcement, SyncLog, AssignmentPriority } from '@/types';
+import { University, Course, TimetableSlot, Assignment, Announcement, SyncLog, AssignmentPriority, CalendarExportLog } from '@/types';
 
 export const universities: University[] = [
   {
@@ -335,5 +335,30 @@ export const dummySyncLogs: SyncLog[] = [
     coursesFetched: courses.length,
     assignmentsFetched: assignments.length,
     announcementsFetched: announcements.length,
+  },
+];
+
+export const dummyCalendarExportLogs: CalendarExportLog[] = [
+  {
+    id: 'cel1',
+    exportedAt: daysFromNow(-2),
+    exportType: 'all',
+    eventCount: 28,
+    status: 'success',
+  },
+  {
+    id: 'cel2',
+    exportedAt: daysFromNow(-9),
+    exportType: 'assignments',
+    eventCount: 16,
+    status: 'success',
+  },
+  {
+    id: 'cel3',
+    exportedAt: daysFromNow(-16),
+    exportType: 'courses',
+    eventCount: 21,
+    status: 'failed',
+    errorMessage: 'カレンダーファイルの生成中にエラーが発生しました。',
   },
 ];

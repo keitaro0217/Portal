@@ -1,4 +1,5 @@
 import { Assignment, Course } from '@/types';
+import { buildGoogleCalendarUrl } from '@/services/calendar/googleCalendarUrlService';
 
 type Props = {
   assignment: Assignment;
@@ -27,6 +28,20 @@ export default function AssignmentCard({ assignment, course }: Props) {
   const isUrgent = assignment.status === 'pending' && daysUntilDue <= 3 && daysUntilDue >= 0;
   const isHighlighted = isUrgent || assignment.status === 'overdue';
   const config = statusConfig[assignment.status];
+
+  const calendarUrl = buildGoogleCalendarUrl({
+    id: `assignment-${assignment.id}`,
+    title: `【課題締切】${course?.name ?? ''} ${assignment.title}`,
+    description: `課題URL: ${assignment.assignmentUrl}`,
+    startDateTime: assignment.dueDate,
+    endDateTime: new Date(assignment.dueDate.getTime() + 30 * 60 * 1000),
+    location: '',
+    type: 'assignment',
+    relatedAssignmentId: assignment.id,
+    relatedCourseId: assignment.courseId,
+    url: assignment.assignmentUrl,
+    reminderMinutes: 60,
+  });
 
   return (
     <div
@@ -59,14 +74,24 @@ export default function AssignmentCard({ assignment, course }: Props) {
           {config.label}
         </span>
       </div>
-      <a
-        href={assignment.assignmentUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700"
-      >
-        開く ↗
-      </a>
+      <div className="mt-3 flex items-center gap-3">
+        <a
+          href={assignment.assignmentUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700"
+        >
+          開く ↗
+        </a>
+        <a
+          href={calendarUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-xs font-medium text-gray-500 hover:text-gray-700"
+        >
+          締切をカレンダーに追加 ↗
+        </a>
+      </div>
     </div>
   );
 }

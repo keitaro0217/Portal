@@ -86,3 +86,46 @@ export type SyncStatus = {
   lastSyncTime: Date | null;
   message: string;
 };
+
+export type CalendarEventType = 'course' | 'assignment' | 'exam' | 'announcement';
+
+export type CalendarEvent = {
+  id: string;
+  title: string;
+  description: string;
+  startDateTime: Date;
+  endDateTime: Date;
+  location: string;
+  type: CalendarEventType;
+  relatedCourseId?: string;
+  relatedAssignmentId?: string;
+  url?: string;
+  reminderMinutes: number;
+};
+
+export type CalendarConnectionStatus = 'disconnected' | 'preparing' | 'exported' | 'failed';
+
+export type CalendarExportSettings = {
+  includeCourses: boolean;
+  includeAssignments: boolean;
+  includeExams: boolean;
+  includeAnnouncements: boolean;
+  includeSubmittedAssignments: boolean;
+  courseReminderMinutes: number;
+  assignmentReminderDays: number;
+  assignmentReminderOnDueDate: boolean;
+  includeOnlineClassUrl: boolean;
+  includeSaturdayClasses: boolean;
+};
+
+export type CalendarExportType = 'courses' | 'assignments' | 'all';
+export type CalendarExportStatus = 'success' | 'failed';
+
+export type CalendarExportLog = {
+  id: string;
+  exportedAt: Date;
+  exportType: CalendarExportType;
+  eventCount: number;
+  status: CalendarExportStatus;
+  errorMessage?: string;
+};

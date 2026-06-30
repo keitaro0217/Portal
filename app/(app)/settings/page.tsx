@@ -1,8 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { usePortal } from '@/store/portalStore';
 import ConnectionCard from '@/components/ConnectionCard';
+
+const calendarStatusConfig: Record<string, { label: string; className: string }> = {
+  disconnected: { label: '未連携', className: 'bg-gray-100 text-gray-600' },
+  preparing: { label: '準備中', className: 'bg-blue-100 text-blue-700' },
+  exported: { label: '連携済み', className: 'bg-green-100 text-green-700' },
+  failed: { label: '失敗', className: 'bg-red-100 text-red-700' },
+};
 
 type ToggleKey = 'assignmentReminders' | 'importantAnnouncements' | 'syncComplete';
 
@@ -28,7 +36,9 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void 
 }
 
 export default function SettingsPage() {
+  const router = useRouter();
   const { state, selectUniversity, universities, sync } = usePortal();
+  const calendarStatus = calendarStatusConfig[state.calendarConnectionStatus];
   const themeColor =
     universities.find((u) => u.id === state.selectedUniversityId)?.themeColor ?? '#003366';
 
@@ -109,6 +119,22 @@ export default function SettingsPage() {
         <p className="text-xs text-gray-400 mt-2 px-1">
           最終同期: {formatSyncTime(state.lastSynced)}
         </p>
+      </section>
+
+      <section>
+        <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide mb-3">カレンダー連携</h2>
+        <button
+          onClick={() => router.push('/settings/calendar')}
+          className="w-full bg-white rounded-xl shadow-sm p-4 flex items-center justify-between gap-3 text-left"
+        >
+          <div>
+            <p className="text-sm font-medium text-gray-900">授業・課題をカレンダーに追加</p>
+            <p className="text-xs text-gray-500 mt-0.5">.ics エクスポートやGoogleカレンダー連携を設定できます</p>
+          </div>
+          <span className={`text-xs px-2 py-1 rounded-full font-medium flex-shrink-0 ${calendarStatus.className}`}>
+            {calendarStatus.label}
+          </span>
+        </button>
       </section>
 
       <section>

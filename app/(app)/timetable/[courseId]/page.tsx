@@ -4,6 +4,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { usePortal } from '@/store/portalStore';
 import AssignmentCard from '@/components/AssignmentCard';
 import AnnouncementCard from '@/components/AnnouncementCard';
+import { buildGoogleCalendarUrl } from '@/services/calendar/googleCalendarUrlService';
+import { mapCoursesToEvents } from '@/services/calendar/calendarEventMapper';
+import { defaultCalendarExportSettings } from '@/services/calendar/calendarSettingsService';
 
 const formatLabels: Record<string, string> = {
   'in-person': '対面',
@@ -15,9 +18,14 @@ export default function CourseDetailPage() {
   const params = useParams<{ courseId: string }>();
   const router = useRouter();
   const { state } = usePortal();
-  const { courses, assignments, announcements } = state;
+  const { courses, assignments, announcements, timetableSlots } = state;
 
   const course = courses.find((c) => c.id === params.courseId);
+
+  const courseSlots = timetableSlots.filter((s) => s.courseId === params.courseId);
+  const courseCalendarEvent = course
+    ? mapCoursesToEvents([course], courseSlots, defaultCalendarExportSettings)[0]
+    : undefined;
 
   const relatedAssignments = assignments
     .filter((a) => a.courseId === params.courseId)
@@ -83,6 +91,16 @@ export default function CourseDetailPage() {
         >
           LMSで開く
         </a>
+        {courseCalendarEvent && (
+          <a
+            href={buildGoogleCalendarUrl(courseCalendarEvent)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 block w-full py-3 rounded-xl text-sm font-bold text-center border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+          >
+            この授業をカレンダーに追加
+          </a>
+        )}
       </div>
 
       <section>

@@ -1,7 +1,15 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
-import { ConnectionStatus, SyncStatus, SyncLog } from '@/types';
+import {
+  ConnectionStatus,
+  SyncStatus,
+  SyncLog,
+  CalendarConnectionStatus,
+  CalendarExportSettings,
+  CalendarExportLog,
+  CalendarExportType,
+} from '@/types';
 import {
   universities,
   courses,
@@ -9,8 +17,12 @@ import {
   assignments,
   announcements,
   dummySyncLogs,
+  dummyCalendarExportLogs,
 } from '@/data/dummyData';
 import type { University, Course, TimetableSlot, Assignment, Announcement } from '@/types';
+import { defaultCalendarExportSettings } from '@/services/calendar/calendarSettingsService';
+import { buildCalendarEvents } from '@/services/calendar/calendarEventMapper';
+import { generateICS, downloadICS } from '@/services/calendar/icsExportService';
 
 type State = {
   selectedUniversityId: string;
@@ -22,6 +34,10 @@ type State = {
   announcements: Announcement[];
   syncStatus: SyncStatus;
   syncLogs: SyncLog[];
+  calendarConnectionStatus: CalendarConnectionStatus;
+  calendarLastExported: Date | null;
+  calendarExportSettings: CalendarExportSettings;
+  calendarExportLogs: CalendarExportLog[];
 };
 
 type Action =
@@ -31,6 +47,11 @@ type Action =
   | { type: 'RESET_CONNECTION' }
   | { type: 'START_SYNC' }
   | { type: 'COMPLETE_SYNC' }
+  | { type: 'UPDATE_CALENDAR_SETTINGS'; payload: Partial<CalendarExportSettings> }
+  | { type: 'START_CALENDAR_EXPORT' }
+  | { type: 'COMPLETE_CALENDAR_EXPORT'; payload: { eventCount: number; exportType: CalendarExportType } }
+  | { type: 'FAIL_CALENDAR_EXPORT'; payload: { errorMessage: string; exportType: CalendarExportType } }
+  | { type: 'DISCONNECT_CALENDAR' }
   | { type: 'HYDRATE'; payload: Partial<State> };
 
 const initialState: State = {
@@ -47,6 +68,10 @@ const initialState: State = {
     message: '同期完了',
   },
   syncLogs: dummySyncLogs,
+  calendarConnectionStatus: 'disconnected',
+  calendarLastExported: null,
+  calendarExportSettings: defaultCalendarExportSettings,
+  calendarExportLogs: dummyCalendarExportLogs,
 };
 
 function reducer(state: State, action: Action): State {
@@ -97,6 +122,47 @@ function reducer(state: State, action: Action): State {
         syncLogs: [newLog, ...state.syncLogs],
       };
     }
+    case 'UPDATE_CALENDAR_SETTINGS':
+      return {
+        ...state,
+        calendarExportSettings: { ...state.calendarExportSettings, ...action.payload },
+      };
+    case 'START_CALENDAR_EXPORT':
+      return { ...state, calendarConnectionStatus: 'preparing' };
+    case 'COMPLETE_CALENDAR_EXPORT': {
+      const now = new Date();
+      const newLog: CalendarExportLog = {
+        id: `cel-${now.getTime()}`,
+        exportedAt: now,
+        exportType: action.payload.exportType,
+        eventCount: action.payload.eventCount,
+        status: 'success',
+      };
+      return {
+        ...state,
+        calendarConnectionStatus: 'exported',
+        calendarLastExported: now,
+        calendarExportLogs: [newLog, ...state.calendarExportLogs],
+      };
+    }
+    case 'FAIL_CALENDAR_EXPORT': {
+      const now = new Date();
+      const newLog: CalendarExportLog = {
+        id: `cel-${now.getTime()}`,
+        exportedAt: now,
+        exportType: action.payload.exportType,
+        eventCount: 0,
+        status: 'failed',
+        errorMessage: action.payload.errorMessage,
+      };
+      return {
+        ...state,
+        calendarConnectionStatus: 'failed',
+        calendarExportLogs: [newLog, ...state.calendarExportLogs],
+      };
+    }
+    case 'DISCONNECT_CALENDAR':
+      return { ...state, calendarConnectionStatus: 'disconnected' };
     case 'HYDRATE':
       return { ...state, ...action.payload };
     default:
@@ -113,6 +179,9 @@ type ContextValue = {
   resetConnection: () => void;
   disconnect: () => void;
   sync: () => void;
+  updateCalendarSettings: (partial: Partial<CalendarExportSettings>) => void;
+  exportCalendar: (type: CalendarExportType) => Promise<void>;
+  disconnectCalendar: () => void;
 };
 
 const PortalContext = createContext<ContextValue | null>(null);
@@ -145,6 +214,20 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
                   timestamp: new Date(log.timestamp),
                 }))
               : initialState.syncLogs,
+            calendarConnectionStatus:
+              parsed.calendarConnectionStatus ?? initialState.calendarConnectionStatus,
+            calendarLastExported: parsed.calendarLastExported
+              ? new Date(parsed.calendarLastExported)
+              : null,
+            calendarExportSettings: parsed.calendarExportSettings
+              ? { ...defaultCalendarExportSettings, ...parsed.calendarExportSettings }
+              : initialState.calendarExportSettings,
+            calendarExportLogs: Array.isArray(parsed.calendarExportLogs)
+              ? parsed.calendarExportLogs.map((log: CalendarExportLog) => ({
+                  ...log,
+                  exportedAt: new Date(log.exportedAt),
+                }))
+              : initialState.calendarExportLogs,
           },
         });
       } catch {}
@@ -160,9 +243,23 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
         lastSynced: state.lastSynced,
         syncStatus: state.syncStatus,
         syncLogs: state.syncLogs,
+        calendarConnectionStatus: state.calendarConnectionStatus,
+        calendarLastExported: state.calendarLastExported,
+        calendarExportSettings: state.calendarExportSettings,
+        calendarExportLogs: state.calendarExportLogs,
       })
     );
-  }, [state.selectedUniversityId, state.connectionStatus, state.lastSynced, state.syncStatus, state.syncLogs]);
+  }, [
+    state.selectedUniversityId,
+    state.connectionStatus,
+    state.lastSynced,
+    state.syncStatus,
+    state.syncLogs,
+    state.calendarConnectionStatus,
+    state.calendarLastExported,
+    state.calendarExportSettings,
+    state.calendarExportLogs,
+  ]);
 
   const selectUniversity = (id: string) => dispatch({ type: 'SELECT_UNIVERSITY', universityId: id });
 
@@ -179,6 +276,46 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
     setTimeout(() => dispatch({ type: 'COMPLETE_SYNC' }), 1800);
   };
 
+  const updateCalendarSettings = (partial: Partial<CalendarExportSettings>) =>
+    dispatch({ type: 'UPDATE_CALENDAR_SETTINGS', payload: partial });
+
+  const exportCalendar = async (type: CalendarExportType) => {
+    dispatch({ type: 'START_CALENDAR_EXPORT' });
+    try {
+      const settings = state.calendarExportSettings;
+      const effectiveSettings: CalendarExportSettings = {
+        ...settings,
+        includeCourses: type === 'all' ? settings.includeCourses : type === 'courses',
+        includeAssignments: type === 'all' ? settings.includeAssignments : type === 'assignments',
+        includeAnnouncements: type === 'all' ? settings.includeAnnouncements : false,
+      };
+
+      const events = buildCalendarEvents(
+        {
+          courses: state.courses,
+          timetableSlots: state.timetableSlots,
+          assignments: state.assignments,
+          announcements: state.announcements,
+        },
+        effectiveSettings
+      );
+
+      const ics = generateICS(events, 'UniPortal');
+      const filename = `uniportal-calendar-${type}-${Date.now()}.ics`;
+      downloadICS(ics, filename);
+
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      dispatch({ type: 'COMPLETE_CALENDAR_EXPORT', payload: { eventCount: events.length, exportType: type } });
+    } catch (err) {
+      dispatch({
+        type: 'FAIL_CALENDAR_EXPORT',
+        payload: { errorMessage: err instanceof Error ? err.message : '不明なエラーが発生しました。', exportType: type },
+      });
+    }
+  };
+
+  const disconnectCalendar = () => dispatch({ type: 'DISCONNECT_CALENDAR' });
+
   return (
     <PortalContext.Provider
       value={{
@@ -190,6 +327,9 @@ export function PortalProvider({ children }: { children: React.ReactNode }) {
         resetConnection,
         disconnect,
         sync,
+        updateCalendarSettings,
+        exportCalendar,
+        disconnectCalendar,
       }}
     >
       {children}
