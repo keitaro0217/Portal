@@ -15,7 +15,7 @@ type Detail = { experiment: Experiment; episodes: EpisodeResult[]; episodeCount:
 function RoleSnap({ label, r }: { label: string; r: RoleSnapshot | null }) {
   if (!r) return null;
   return (
-    <div className="rounded-xl border border-rose-100 bg-white/45 p-3 text-xs">
+    <div className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs">
       <p className="font-semibold text-slate-900">{label}</p>
       <dl className="mt-1 space-y-0.5 text-slate-600">
         <div>プロバイダー: {r.providerName}（{providerTypeLabels[r.providerType]}）</div>
@@ -76,7 +76,7 @@ export default function ExperimentDetailPage() {
 
   return (
     <div className="space-y-4">
-      <Link href="/research/experiments" className="text-xs text-slate-500 hover:text-rose-700">
+      <Link href="/research/experiments" className="text-xs text-slate-600 hover:text-rose-700">
         ← 研究実験
       </Link>
       <PageHeader
@@ -117,7 +117,7 @@ export default function ExperimentDetailPage() {
             {formatInt(done)} / {formatInt(e.episodes)} エピソード（{pct}%）
           </span>
         </div>
-        <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-rose-100/70">
+        <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-slate-200">
           <div className="rc-primary h-full rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
         </div>
       </Card>
@@ -142,7 +142,7 @@ export default function ExperimentDetailPage() {
         </dl>
         <details className="mt-3">
           <summary className="cursor-pointer text-xs text-slate-600">規則文書を表示</summary>
-          <pre className="mt-2 whitespace-pre-wrap rounded-xl bg-white/55 p-3 text-xs text-slate-700">{s.ruleDocument}</pre>
+          <pre className="mt-2 whitespace-pre-wrap rounded-xl border border-slate-200 bg-slate-50 p-3 text-xs text-slate-800">{s.ruleDocument}</pre>
         </details>
       </Card>
 
@@ -179,7 +179,7 @@ export default function ExperimentDetailPage() {
             if (open === ep.index) {
               rows.push(
                 <tr key={`${ep.index}-detail`}>
-                  <td colSpan={9} className="bg-rose-50/40 p-3">
+                  <td colSpan={9} className="bg-slate-50 p-3">
                     {ep.judge && <p className="mb-2 text-xs text-slate-700">Judge: {ep.judge.summary || ep.judge.parseError}</p>}
                     <DecisionTable decisions={ep.decisions} />
                   </td>

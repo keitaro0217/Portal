@@ -137,7 +137,7 @@ function RoleCard({ role, assignment, providers, onSaved }: { role: ResearchRole
         </Button>
       </div>
       {testOutput && (
-        <pre className={`mt-3 whitespace-pre-wrap rounded-xl border p-3 text-xs backdrop-blur ${testOutput.ok ? 'border-rose-100 bg-white/50 text-slate-700' : 'border-rose-300/80 bg-rose-50/70 text-rose-800'}`}>{testOutput.text}</pre>
+        <pre className={`mt-3 whitespace-pre-wrap rounded-xl border p-3 text-xs ${testOutput.ok ? 'border-slate-200 bg-slate-50 text-slate-800' : 'border-rose-200 bg-rose-50 text-rose-900'}`}>{testOutput.text}</pre>
       )}
     </Card>
   );

@@ -35,10 +35,10 @@ export const reasoningSupport: Record<ProviderType, 'effort' | 'thinkingBudget' 
 };
 
 export const connectionStatusLabels: Record<ConnectionStatus, { label: string; className: string }> = {
-  connected: { label: '接続済み', className: 'bg-emerald-50/80 text-emerald-700 ring-emerald-600/20' },
+  connected: { label: '接続済み', className: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20' },
   failed: { label: '接続失敗', className: 'bg-red-50/80 text-red-700 ring-red-600/20' },
-  unconfigured: { label: '未設定', className: 'bg-slate-100/70 text-slate-600 ring-slate-500/20' },
-  untested: { label: '未確認', className: 'bg-amber-50/80 text-amber-700 ring-amber-600/20' },
+  unconfigured: { label: '未設定', className: 'bg-slate-100 text-slate-600 ring-slate-500/20' },
+  untested: { label: '未確認', className: 'bg-amber-50 text-amber-700 ring-amber-600/20' },
 };
 
 export const errorCategoryLabels: Record<LlmErrorCategory, string> = {
@@ -70,12 +70,12 @@ export const roleLabels: Record<ResearchRole, { label: string; description: stri
 export const researchRoles: ResearchRole[] = ['trading_agent', 'llm_judge', 'auto_patch', 'document_analysis'];
 
 export const experimentStatusLabels: Record<ExperimentStatus, { label: string; className: string }> = {
-  queued: { label: '待機中', className: 'bg-slate-100/70 text-slate-600 ring-slate-500/20' },
-  running: { label: '実行中', className: 'bg-rose-50/80 text-rose-700 ring-rose-500/30' },
-  pausing: { label: '一時停止中…', className: 'bg-amber-50/80 text-amber-700 ring-amber-600/20' },
-  paused: { label: '一時停止', className: 'bg-amber-50/80 text-amber-700 ring-amber-600/20' },
-  stopping: { label: '停止中…', className: 'bg-slate-100/70 text-slate-600 ring-slate-500/20' },
-  stopped: { label: '停止', className: 'bg-slate-100/70 text-slate-600 ring-slate-500/20' },
-  completed: { label: '完了', className: 'bg-emerald-50/80 text-emerald-700 ring-emerald-600/20' },
+  queued: { label: '待機中', className: 'bg-slate-100 text-slate-600 ring-slate-500/20' },
+  running: { label: '実行中', className: 'bg-rose-50 text-rose-700 ring-rose-500/30' },
+  pausing: { label: '一時停止中…', className: 'bg-amber-50 text-amber-700 ring-amber-600/20' },
+  paused: { label: '一時停止', className: 'bg-amber-50 text-amber-700 ring-amber-600/20' },
+  stopping: { label: '停止中…', className: 'bg-slate-100 text-slate-600 ring-slate-500/20' },
+  stopped: { label: '停止', className: 'bg-slate-100 text-slate-600 ring-slate-500/20' },
+  completed: { label: '完了', className: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20' },
   failed: { label: '失敗', className: 'bg-red-50/80 text-red-700 ring-red-600/20' },
 };

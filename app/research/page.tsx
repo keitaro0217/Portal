@@ -56,14 +56,14 @@ export default function DashboardPage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <Card title="APIプロバイダーの接続状態" actions={<Link href="/research/settings/api" className="text-xs text-slate-600 hover:text-rose-700">API連携へ →</Link>}>
           {data.providers.length === 0 ? (
-            <p className="text-sm text-slate-500">プロバイダーが登録されていません。</p>
+            <p className="text-sm text-slate-600">プロバイダーが登録されていません。</p>
           ) : (
             <ul className="divide-y divide-slate-100">
               {data.providers.map((p) => (
                 <li key={p.id} className="flex items-center justify-between gap-3 py-2">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium text-slate-900">{p.name}</p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-600">
                       {providerTypeLabels[p.type]} ・ 最終テスト {formatDate(p.connection.testedAt, basic)}
                     </p>
                   </div>
@@ -78,7 +78,7 @@ export default function DashboardPage() {
             {researchRoles.map((r) => (
               <li key={r} className="flex items-center justify-between gap-3 py-2 text-sm">
                 <span className="text-slate-700">{roleLabels[r].label}</span>
-                <span className="truncate text-right text-xs text-slate-500">
+                <span className="truncate text-right text-xs text-slate-600">
                   {data.roles[r].model ? `${providerName(data.roles[r].providerId)} / ${data.roles[r].model}` : '未設定'}
                 </span>
               </li>

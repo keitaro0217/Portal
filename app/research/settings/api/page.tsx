@@ -231,7 +231,7 @@ function ApiKeyEditor({ provider, onDone }: { provider: ProviderDTO; onDone: (p:
   };
 
   return (
-    <div className="mt-3 rounded-xl border border-rose-100 bg-white/50 p-3 backdrop-blur">
+    <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
       <form
         className="flex flex-col gap-2 sm:flex-row"
         autoComplete="off"
@@ -258,27 +258,27 @@ function ApiKeyEditor({ provider, onDone }: { provider: ProviderDTO; onDone: (p:
         </div>
       </form>
       {error && <p className="mt-2 text-xs text-rose-600">{error}</p>}
-      <p className="mt-2 text-xs text-slate-500">APIキーはブラウザに保存されず、サーバーで暗号化して保管します。</p>
+      <p className="mt-2 text-xs text-slate-600">APIキーはブラウザに保存されず、サーバーで暗号化して保管します。</p>
     </div>
   );
 }
 
 function TestResultView({ result }: { result: ConnectionTestResult }) {
   return (
-    <div className={`mt-3 rounded-xl border p-3 backdrop-blur ${result.ok ? 'border-emerald-200/80 bg-emerald-50/50' : 'border-rose-300/80 bg-rose-50/60'}`}>
+    <div className={`mt-3 rounded-xl border p-3 ${result.ok ? 'border-emerald-200 bg-emerald-50' : 'border-rose-200 bg-rose-50'}`}>
       <p className={`text-sm font-medium ${result.ok ? 'text-emerald-800' : 'text-rose-800'}`}>
         {result.ok ? '✓ 接続テストに成功しました' : `✕ ${result.errorCategory ? errorCategoryLabels[result.errorCategory] : '接続テストに失敗しました'}`}
-        {result.model && <span className="ml-2 text-xs font-normal text-slate-500">モデル: {result.model}</span>}
+        {result.model && <span className="ml-2 text-xs font-normal text-slate-600">モデル: {result.model}</span>}
       </p>
       <ol className="mt-2 space-y-1">
         {result.steps.map((s, i) => (
           <li key={s.key} className="flex gap-2 text-xs">
-            <span className={s.status === 'ok' ? 'text-emerald-700' : s.status === 'failed' ? 'text-rose-700' : 'text-slate-400'}>
+            <span className={s.status === 'ok' ? 'text-emerald-700' : s.status === 'failed' ? 'text-rose-700' : 'text-slate-500'}>
               {s.status === 'ok' ? '✓' : s.status === 'failed' ? '✕' : '–'}
             </span>
             <span className="text-slate-700">
               {i + 1}. {s.label}
-              {s.message && <span className="text-slate-500">：{s.message}</span>}
+              {s.message && <span className="text-slate-600">：{s.message}</span>}
             </span>
           </li>
         ))}
@@ -373,35 +373,35 @@ function ProviderCard({ provider, onChange, onNotice }: { provider: ProviderDTO;
           <div className="flex flex-wrap items-center gap-2">
             <h3 className="text-sm font-semibold text-slate-900">{provider.name}</h3>
             <Badge className={status.className}>{status.label}</Badge>
-            <span className="text-xs text-slate-500">{providerTypeLabels[provider.type]}</span>
+            <span className="text-xs text-slate-600">{providerTypeLabels[provider.type]}</span>
           </div>
           <dl className="mt-2 grid grid-cols-1 gap-x-6 gap-y-1 text-xs sm:grid-cols-2">
             <div className="flex gap-2 min-w-0">
-              <dt className="text-slate-500 flex-shrink-0">Base URL</dt>
+              <dt className="text-slate-600 flex-shrink-0">Base URL</dt>
               <dd className="truncate font-mono text-slate-700">{provider.baseUrl}</dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-500">APIキー</dt>
+              <dt className="text-slate-600">APIキー</dt>
               <dd className="font-mono text-slate-700">
                 {provider.hasApiKey ? provider.apiKeyMasked : apiKeyRequired[provider.type] ? <span className="text-rose-600">未登録</span> : '不要'}
               </dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-500">既定モデル</dt>
+              <dt className="text-slate-600">既定モデル</dt>
               <dd className="text-slate-700">{provider.defaultModel ?? '—'}</dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-500">最終テスト</dt>
+              <dt className="text-slate-600">最終テスト</dt>
               <dd className="text-slate-700">{formatDate(provider.connection.testedAt, basic)}</dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-500">タイムアウト / 再試行 / 同時実行</dt>
+              <dt className="text-slate-600">タイムアウト / 再試行 / 同時実行</dt>
               <dd className="text-slate-700">
                 {provider.timeoutMs / 1000}秒 / {provider.maxRetries}回 / {provider.maxConcurrency}
               </dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-500">月間予算</dt>
+              <dt className="text-slate-600">月間予算</dt>
               <dd className="text-slate-700">{provider.monthlyBudgetUsd === null ? '上限なし' : `$${provider.monthlyBudgetUsd}`}</dd>
             </div>
           </dl>
@@ -454,7 +454,7 @@ function ProviderCard({ provider, onChange, onNotice }: { provider: ProviderDTO;
             接続テスト
           </Button>
         </div>
-        <span className="text-xs text-slate-500 sm:ml-auto">
+        <span className="text-xs text-slate-600 sm:ml-auto">
           {provider.modelsFetchedAt ? `モデル ${provider.models.length} 件（${formatDate(provider.modelsFetchedAt, basic)} 取得）` : 'モデル未取得'}
         </span>
       </div>

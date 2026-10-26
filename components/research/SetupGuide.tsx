@@ -21,7 +21,7 @@ export default function SetupGuide({ providers, roles, compact }: { providers: P
   const steps = setupSteps(providers, roles);
   if (steps.every((s) => s.done)) return null;
   return (
-    <div className="rounded-2xl border border-amber-200/80 bg-amber-50/70 px-5 py-4 shadow-sm backdrop-blur-md">
+    <div className="rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 shadow-sm">
       <p className="text-sm font-semibold text-amber-900">AI接続の設定が完了していません</p>
       {!compact && <p className="mt-1 text-xs text-amber-800">研究実験を実行するには、以下の手順で接続情報を設定してください。ソースコードの編集は不要です。</p>}
       <ol className="mt-3 space-y-1.5">
@@ -31,7 +31,7 @@ export default function SetupGuide({ providers, roles, compact }: { providers: P
               {s.done ? '✓' : i + 1}
             </span>
             {s.done ? (
-              <span className="text-slate-500 line-through">{s.label}</span>
+              <span className="text-slate-600 line-through">{s.label}</span>
             ) : (
               <Link href={s.href} className="text-amber-900 underline underline-offset-2 hover:text-amber-700">
                 {s.label}

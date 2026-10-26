@@ -31,16 +31,13 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
   return (
     <SettingsContext.Provider value={basic}>
       <div className="research-root relative">
-        <div className="rc-orb -right-24 -top-24 h-96 w-96 bg-rose-400/25" aria-hidden />
-        <div className="rc-orb -left-32 top-1/3 h-80 w-80 bg-rose-300/20 [animation-delay:-6s]" aria-hidden />
-        <div className="rc-orb bottom-0 right-1/4 h-72 w-72 bg-pink-300/20 [animation-delay:-12s]" aria-hidden />
-        <header className="sticky top-0 z-30 border-b border-white/60 bg-white/55 backdrop-blur-xl">
+        <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
             <Link href="/research" className="flex min-w-0 items-center gap-2.5">
               <span className="rc-primary flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl text-sm font-bold">R</span>
               <span className="truncate text-sm font-bold tracking-wide text-slate-900">{basic.appDisplayName}</span>
             </Link>
-            <span className="hidden items-center gap-2 truncate rounded-full bg-white/60 px-3 py-1 text-xs text-slate-600 ring-1 ring-rose-100 sm:flex">
+            <span className="hidden items-center gap-2 truncate rounded-full bg-slate-50 px-3 py-1 text-xs text-slate-700 ring-1 ring-slate-200 sm:flex">
               <span className="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden />
               ログイン中: {principal}
             </span>
@@ -50,7 +47,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
               <Link
                 key={item.href}
                 href={item.href}
-                className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${isActive(item.href, item.exact) ? 'border-rose-500 font-semibold text-rose-700' : 'border-transparent text-slate-500'}`}
+                className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${isActive(item.href, item.exact) ? 'border-rose-500 font-semibold text-rose-700' : 'border-transparent text-slate-600'}`}
               >
                 {item.label}
               </Link>
@@ -64,17 +61,17 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
                 <div key={item.href}>
                   <Link
                     href={item.href}
-                    className={`block rounded-xl px-3 py-2 text-sm transition-colors ${isActive(item.href, item.exact) ? 'rc-primary font-semibold' : 'text-slate-600 hover:bg-white/70 hover:text-rose-700'}`}
+                    className={`block rounded-xl px-3 py-2 text-sm transition-colors ${isActive(item.href, item.exact) ? 'rc-primary font-semibold' : 'text-slate-700 hover:bg-slate-100 hover:text-rose-700'}`}
                   >
                     {item.label}
                   </Link>
                   {item.href === '/research/settings' && isActive(item.href) && (
-                    <div className="mb-1 ml-4 mt-1.5 space-y-0.5 border-l border-rose-200/80 pl-3">
+                    <div className="mb-1 ml-4 mt-1.5 space-y-0.5 border-l border-slate-200 pl-3">
                       {settingsNav.map((s) => (
                         <Link
                           key={s.href}
                           href={s.href}
-                          className={`block rounded-lg px-2 py-1.5 text-xs transition-colors ${pathname === s.href ? 'bg-rose-50/80 font-semibold text-rose-700' : 'text-slate-500 hover:text-rose-700'}`}
+                          className={`block rounded-lg px-2 py-1.5 text-xs transition-colors ${pathname === s.href ? 'bg-rose-50 font-semibold text-rose-700' : 'text-slate-600 hover:text-rose-700'}`}
                         >
                           {s.label}
                         </Link>
@@ -95,12 +92,12 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
 export function SettingsTabs() {
   const pathname = usePathname();
   return (
-    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-rose-100 md:hidden">
+    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-slate-200 md:hidden">
       {settingsNav.map((s) => (
         <Link
           key={s.href}
           href={s.href}
-          className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${pathname === s.href ? 'border-rose-500 font-semibold text-rose-700' : 'border-transparent text-slate-500'}`}
+          className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${pathname === s.href ? 'border-rose-500 font-semibold text-rose-700' : 'border-transparent text-slate-600'}`}
         >
           {s.label}
         </Link>
