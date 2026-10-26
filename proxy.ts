@@ -1,39 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { authenticateHeaders, unauthorizedResponse } from '@/lib/server/auth';
+import { isProduction } from '@/lib/server/env';
+
+const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]']);
+
+function requestHostname(request: NextRequest): string {
+  const host = request.headers.get('x-forwarded-host')?.split(',')[0]?.trim() || request.headers.get('host') || request.nextUrl.host;
+  return host.replace(/:\d+$/, '').toLowerCase();
+}
+
+function requestProtocol(request: NextRequest): string {
+  // TLS終端するリバースプロキシ（Vercel等）の背後では x-forwarded-proto を参照する
+  const forwarded = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim();
+  return forwarded || request.nextUrl.protocol.replace(':', '');
+}
 
 export function proxy(request: NextRequest) {
-  const user = process.env.BASIC_AUTH_USER;
-  const password = process.env.BASIC_AUTH_PASSWORD;
+  const production = isProduction();
 
-  if (!user || !password) {
-    return NextResponse.next();
-  }
-
-  const authHeader = request.headers.get('authorization');
-
-  if (authHeader) {
-    const [scheme, encoded] = authHeader.split(' ');
-    if (scheme === 'Basic' && encoded) {
-      const decoded = Buffer.from(encoded, 'base64').toString('utf-8');
-      const separatorIndex = decoded.indexOf(':');
-      const inputUser = decoded.slice(0, separatorIndex);
-      const inputPassword = decoded.slice(separatorIndex + 1);
-
-      if (inputUser === user && inputPassword === password) {
-        return NextResponse.next();
-      }
+  // Basic認証は平文で認証情報を送るため、本番ではHTTPS以外を受け付けない。
+  // ローカルでの `next start` 動作確認のため、ループバックのみ例外とする。
+  if (production && requestProtocol(request) !== 'https' && !LOOPBACK_HOSTS.has(requestHostname(request))) {
+    if (request.method === 'GET' || request.method === 'HEAD') {
+      const url = new URL(`${request.nextUrl.pathname}${request.nextUrl.search}`, `https://${requestHostname(request)}`);
+      return NextResponse.redirect(url, 308);
     }
+    return NextResponse.json({ error: { code: 'https_required', message: 'HTTPSでアクセスしてください。' } }, { status: 403 });
   }
 
-  return new NextResponse('Authentication required.', {
-    status: 401,
-    headers: {
-      'WWW-Authenticate': 'Basic realm="Secure Area"',
-    },
-  });
+  const result = authenticateHeaders(request.headers);
+  if (!result.ok) {
+    return unauthorizedResponse(result);
+  }
+
+  const response = NextResponse.next();
+  if (production) {
+    response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  }
+  return response;
 }
 
 export const config = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };
