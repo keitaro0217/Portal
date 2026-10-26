@@ -6,9 +6,9 @@ import { useBasicSettings } from '@/components/research/ResearchShell';
 import { api, formatDate } from '@/lib/research/client';
 import type { AuditEntry, SecurityStatus } from '@/lib/research/types';
 
-const ok = 'bg-emerald-50 text-emerald-700 ring-emerald-600/20';
-const ng = 'bg-red-50 text-red-700 ring-red-600/20';
-const warn = 'bg-amber-50 text-amber-700 ring-amber-600/20';
+const ok = 'bg-emerald-50/80 text-emerald-700 ring-emerald-600/20';
+const ng = 'bg-rose-50/80 text-rose-700 ring-rose-600/20';
+const warn = 'bg-amber-50/80 text-amber-700 ring-amber-600/20';
 
 function Row({ label, value, children }: { label: string; value: React.ReactNode; children?: React.ReactNode }) {
   return (

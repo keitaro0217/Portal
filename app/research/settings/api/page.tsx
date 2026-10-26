@@ -231,7 +231,7 @@ function ApiKeyEditor({ provider, onDone }: { provider: ProviderDTO; onDone: (p:
   };
 
   return (
-    <div className="mt-3 rounded-md border border-slate-200 bg-slate-50 p-3">
+    <div className="mt-3 rounded-xl border border-rose-100 bg-white/50 p-3 backdrop-blur">
       <form
         className="flex flex-col gap-2 sm:flex-row"
         autoComplete="off"
@@ -257,7 +257,7 @@ function ApiKeyEditor({ provider, onDone }: { provider: ProviderDTO; onDone: (p:
           <Button onClick={() => onDone(null, null)}>閉じる</Button>
         </div>
       </form>
-      {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
+      {error && <p className="mt-2 text-xs text-rose-600">{error}</p>}
       <p className="mt-2 text-xs text-slate-500">APIキーはブラウザに保存されず、サーバーで暗号化して保管します。</p>
     </div>
   );
@@ -265,15 +265,15 @@ function ApiKeyEditor({ provider, onDone }: { provider: ProviderDTO; onDone: (p:
 
 function TestResultView({ result }: { result: ConnectionTestResult }) {
   return (
-    <div className={`mt-3 rounded-md border p-3 ${result.ok ? 'border-emerald-200 bg-emerald-50/50' : 'border-red-200 bg-red-50/50'}`}>
-      <p className={`text-sm font-medium ${result.ok ? 'text-emerald-800' : 'text-red-800'}`}>
+    <div className={`mt-3 rounded-xl border p-3 backdrop-blur ${result.ok ? 'border-emerald-200/80 bg-emerald-50/50' : 'border-rose-300/80 bg-rose-50/60'}`}>
+      <p className={`text-sm font-medium ${result.ok ? 'text-emerald-800' : 'text-rose-800'}`}>
         {result.ok ? '✓ 接続テストに成功しました' : `✕ ${result.errorCategory ? errorCategoryLabels[result.errorCategory] : '接続テストに失敗しました'}`}
         {result.model && <span className="ml-2 text-xs font-normal text-slate-500">モデル: {result.model}</span>}
       </p>
       <ol className="mt-2 space-y-1">
         {result.steps.map((s, i) => (
           <li key={s.key} className="flex gap-2 text-xs">
-            <span className={s.status === 'ok' ? 'text-emerald-700' : s.status === 'failed' ? 'text-red-700' : 'text-slate-400'}>
+            <span className={s.status === 'ok' ? 'text-emerald-700' : s.status === 'failed' ? 'text-rose-700' : 'text-slate-400'}>
               {s.status === 'ok' ? '✓' : s.status === 'failed' ? '✕' : '–'}
             </span>
             <span className="text-slate-700">
@@ -383,7 +383,7 @@ function ProviderCard({ provider, onChange, onNotice }: { provider: ProviderDTO;
             <div className="flex gap-2">
               <dt className="text-slate-500">APIキー</dt>
               <dd className="font-mono text-slate-700">
-                {provider.hasApiKey ? provider.apiKeyMasked : apiKeyRequired[provider.type] ? <span className="text-red-600">未登録</span> : '不要'}
+                {provider.hasApiKey ? provider.apiKeyMasked : apiKeyRequired[provider.type] ? <span className="text-rose-600">未登録</span> : '不要'}
               </dd>
             </div>
             <div className="flex gap-2">
@@ -406,7 +406,7 @@ function ProviderCard({ provider, onChange, onNotice }: { provider: ProviderDTO;
             </div>
           </dl>
           {provider.connection.status === 'failed' && provider.connection.message && !result && (
-            <p className="mt-2 text-xs text-red-700">{provider.connection.message}</p>
+            <p className="mt-2 text-xs text-rose-700">{provider.connection.message}</p>
           )}
         </div>
         <div className="flex flex-wrap gap-2 sm:justify-end">

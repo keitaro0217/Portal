@@ -275,7 +275,7 @@ export default function CostsPage() {
             return (
               <tr key={e.id}>
                 <td className={td}>
-                  <Link href={`/research/experiments/${e.id}`} className="hover:underline">
+                  <Link href={`/research/experiments/${e.id}`} className="hover:text-rose-700">
                     {e.name}
                   </Link>
                 </td>
@@ -307,7 +307,7 @@ export default function CostsPage() {
                 <td className={td}>{formatInt(r.usage.cachedTokens)}</td>
                 <td className={td}>{r.usage.reasoningTokens === null ? '—' : formatInt(r.usage.reasoningTokens)}</td>
                 <td className={td}>{!r.ok ? '—' : r.costUsd === null ? <span className="text-amber-700">料金未設定</span> : formatUsd(r.costUsd, 6)}</td>
-                <td className={td}>{r.ok ? <span className="text-emerald-700">成功</span> : <span className="text-red-700">{r.errorCategory ? errorCategoryLabels[r.errorCategory].split('（')[0] : '失敗'}</span>}</td>
+                <td className={td}>{r.ok ? <span className="text-emerald-700">成功</span> : <span className="text-rose-700">{r.errorCategory ? errorCategoryLabels[r.errorCategory].split('（')[0] : '失敗'}</span>}</td>
               </tr>
             ))}
           </Table>

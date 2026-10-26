@@ -56,7 +56,7 @@ export default function SimulationPage() {
         <>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             <Stat label="最終資産評価額" value={formatInt(r.finalValue)} sub={`モデル: ${data.model}`} />
-            <Stat label="損益" value={<span className={(r.pnl ?? 0) >= 0 ? 'text-emerald-700' : 'text-red-700'}>{formatInt(r.pnl)}</span>} />
+            <Stat label="損益" value={<span className={(r.pnl ?? 0) >= 0 ? 'text-emerald-700' : 'text-rose-700'}>{formatInt(r.pnl)}</span>} />
             <Stat label="規則違反" value={r.violationCount} />
             <Stat label="費用（試算）" value={formatUsd(r.usage.costUsd, 6)} sub={`${r.usage.calls} 回呼び出し${r.usage.unpricedCalls ? ` ・ 料金未設定 ${r.usage.unpricedCalls}` : ''}`} />
           </div>
