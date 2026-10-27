@@ -54,16 +54,16 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card title="APIプロバイダーの接続状態" actions={<Link href="/research/settings/api" className="text-xs text-navy-200 hover:text-sky-300">API連携へ →</Link>}>
+        <Card title="APIプロバイダーの接続状態" actions={<Link href="/research/settings/api" className="text-xs text-ink-200 hover:text-white">API連携へ →</Link>}>
           {data.providers.length === 0 ? (
-            <p className="text-sm text-navy-200">プロバイダーが登録されていません。</p>
+            <p className="text-sm text-ink-200">プロバイダーが登録されていません。</p>
           ) : (
-            <ul className="divide-y divide-navy-800">
+            <ul className="divide-y divide-ink-800">
               {data.providers.map((p) => (
                 <li key={p.id} className="flex items-center justify-between gap-3 py-2">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium text-white">{p.name}</p>
-                    <p className="text-xs text-navy-200">
+                    <p className="text-xs text-ink-200">
                       {providerTypeLabels[p.type]} ・ 最終テスト {formatDate(p.connection.testedAt, basic)}
                     </p>
                   </div>
@@ -73,12 +73,12 @@ export default function DashboardPage() {
             </ul>
           )}
         </Card>
-        <Card title="モデル割り当て" actions={<Link href="/research/settings/models" className="text-xs text-navy-200 hover:text-sky-300">変更 →</Link>}>
-          <ul className="divide-y divide-navy-800">
+        <Card title="モデル割り当て" actions={<Link href="/research/settings/models" className="text-xs text-ink-200 hover:text-white">変更 →</Link>}>
+          <ul className="divide-y divide-ink-800">
             {researchRoles.map((r) => (
               <li key={r} className="flex items-center justify-between gap-3 py-2 text-sm">
-                <span className="text-navy-100">{roleLabels[r].label}</span>
-                <span className="truncate text-right text-xs text-navy-200">
+                <span className="text-ink-100">{roleLabels[r].label}</span>
+                <span className="truncate text-right text-xs text-ink-200">
                   {data.roles[r].model ? `${providerName(data.roles[r].providerId)} / ${data.roles[r].model}` : '未設定'}
                 </span>
               </li>
@@ -87,7 +87,7 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      <Card title="最近の実験" actions={<Link href="/research/experiments" className="text-xs text-navy-200 hover:text-sky-300">研究実験へ →</Link>}>
+      <Card title="最近の実験" actions={<Link href="/research/experiments" className="text-xs text-ink-200 hover:text-white">研究実験へ →</Link>}>
         {data.experiments.length === 0 ? (
           <EmptyState title="実験はまだありません" description="研究実験画面から、取引エージェントの大量エピソード実験を開始できます。" href="/research/experiments" action="実験を作成" />
         ) : (
@@ -95,7 +95,7 @@ export default function DashboardPage() {
             {data.experiments.map((e) => (
               <tr key={e.id}>
                 <td className={td}>
-                  <Link href={`/research/experiments/${e.id}`} className="font-medium text-white hover:text-sky-300">
+                  <Link href={`/research/experiments/${e.id}`} className="font-medium text-white hover:text-white">
                     {e.name}
                   </Link>
                 </td>

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
-// 研究コンソール共通のUI部品。透明感のある紺色（半透明のすりガラス）で統一し、明るい文字で読みやすさを確保する。
+// 研究コンソール共通のUI部品。黒を基調にした半透明のすりガラスで統一し、明るい文字で読みやすさを確保する。
 // テーマの定義は app/globals.css の .research-root / .rc-* を参照。
 
 export function PageHeader({ title, description, actions }: { title: string; description?: string; actions?: ReactNode }) {
@@ -11,7 +11,7 @@ export function PageHeader({ title, description, actions }: { title: string; des
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <h1 className="text-2xl font-bold tracking-tight text-white">{title}</h1>
-        {description && <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-navy-200">{description}</p>}
+        {description && <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-ink-200">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
@@ -25,7 +25,7 @@ export function Card({ title, description, actions, children, className = '' }: 
         <header className="flex flex-col gap-2 border-b border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             {title && <h2 className="text-sm font-semibold tracking-wide text-white">{title}</h2>}
-            {description && <p className="mt-0.5 text-xs text-navy-200">{description}</p>}
+            {description && <p className="mt-0.5 text-xs text-ink-200">{description}</p>}
           </div>
           {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
         </header>
@@ -49,7 +49,7 @@ const alertStyles: Record<AlertKind, string> = {
   success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200',
   error: 'border-rose-500/30 bg-rose-500/10 text-rose-200',
   warning: 'border-amber-500/30 bg-amber-500/10 text-amber-200',
-  info: 'border-white/10 bg-navy-900/50 text-navy-100',
+  info: 'border-white/10 bg-ink-900/50 text-ink-100',
 };
 
 export function Alert({ kind, title, children, onClose }: { kind: AlertKind; title?: string; children?: ReactNode; onClose?: () => void }) {
@@ -87,9 +87,9 @@ export function NoticeBar({ notice, onClose }: { notice: Notice; onClose: () => 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
 const buttonStyles: Record<ButtonVariant, string> = {
   primary: 'rc-primary',
-  secondary: 'bg-white/5 text-navy-100 ring-1 ring-inset ring-white/15 hover:bg-white/10 hover:text-sky-300 disabled:text-navy-400',
+  secondary: 'bg-white/5 text-ink-100 ring-1 ring-inset ring-white/15 hover:bg-white/10 hover:text-white disabled:text-ink-400',
   danger: 'bg-white/5 text-rose-300 ring-1 ring-inset ring-rose-400/50 hover:bg-rose-500/10 disabled:text-rose-300/50',
-  ghost: 'text-navy-200 hover:bg-navy-800 hover:text-sky-300 disabled:text-navy-500',
+  ghost: 'text-ink-200 hover:bg-ink-800 hover:text-white disabled:text-ink-500',
 };
 
 export function Button({
@@ -115,38 +115,38 @@ export function Button({
 export function Field({ label, hint, error, children, required }: { label: string; hint?: string; error?: string | null; children: ReactNode; required?: boolean }) {
   return (
     <label className="block">
-      <span className="text-xs font-medium text-navy-100">
+      <span className="text-xs font-medium text-ink-100">
         {label}
         {required && <span className="ml-0.5 text-rose-300">*</span>}
       </span>
       <div className="mt-1">{children}</div>
-      {error ? <p className="mt-1 text-xs text-rose-300">{error}</p> : hint ? <p className="mt-1 text-xs text-navy-200">{hint}</p> : null}
+      {error ? <p className="mt-1 text-xs text-rose-300">{error}</p> : hint ? <p className="mt-1 text-xs text-ink-200">{hint}</p> : null}
     </label>
   );
 }
 
 export const inputClass =
-  'block w-full rounded-lg border-0 bg-navy-950/40 px-3 py-1.5 text-sm text-white ring-1 ring-inset ring-white/15 transition placeholder:text-navy-400 focus:bg-navy-950/60 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-navy-500/50 disabled:bg-navy-950/40 disabled:text-navy-400';
+  'block w-full rounded-lg border-0 bg-ink-950/40 px-3 py-1.5 text-sm text-white ring-1 ring-inset ring-white/15 transition placeholder:text-ink-400 focus:bg-ink-950/60 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ink-500/50 disabled:bg-ink-950/40 disabled:text-ink-400';
 
 export function Stat({ label, value, sub }: { label: string; value: ReactNode; sub?: ReactNode }) {
   return (
     <div className="rc-glass relative overflow-hidden rounded-xl py-4 pl-5 pr-4">
-      <span className="absolute inset-y-0 left-0 w-1 bg-sky-400" aria-hidden />
-      <p className="text-xs font-medium text-navy-200">{label}</p>
+      <span className="absolute inset-y-0 left-0 w-1 bg-white" aria-hidden />
+      <p className="text-xs font-medium text-ink-200">{label}</p>
       <p className="mt-1.5 text-2xl font-bold tabular-nums tracking-tight text-white">{value}</p>
-      {sub && <p className="mt-0.5 text-xs text-navy-200">{sub}</p>}
+      {sub && <p className="mt-0.5 text-xs text-ink-200">{sub}</p>}
     </div>
   );
 }
 
 export function EmptyState({ title, description, href, action }: { title: string; description: string; href?: string; action?: string }) {
   return (
-    <div className="rounded-xl border border-dashed border-white/20 bg-navy-900/40 px-6 backdrop-blur-md py-10 text-center">
-      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-navy-800 text-sky-300" aria-hidden>
+    <div className="rounded-xl border border-dashed border-white/20 bg-ink-900/40 px-6 backdrop-blur-md py-10 text-center">
+      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-ink-800 text-white" aria-hidden>
         ＋
       </div>
       <p className="text-sm font-semibold text-white">{title}</p>
-      <p className="mt-1 text-sm text-navy-200">{description}</p>
+      <p className="mt-1 text-sm text-ink-200">{description}</p>
       {href && action && (
         <Link href={href} className="rc-primary mt-4 inline-flex rounded-lg px-3.5 py-1.5 text-sm font-medium">
           {action}
@@ -162,7 +162,7 @@ export function Table({ head, children, empty }: { head: ReactNode[]; children: 
     <div className="overflow-x-auto">
       <table className="min-w-full text-sm">
         <thead>
-          <tr className="border-b border-white/10 bg-navy-950/30 text-left text-xs font-semibold text-navy-100">
+          <tr className="border-b border-white/10 bg-ink-950/30 text-left text-xs font-semibold text-ink-100">
             {head.map((h, i) => (
               <th key={i} className="whitespace-nowrap px-3 py-2 font-medium">
                 {h}
@@ -175,7 +175,7 @@ export function Table({ head, children, empty }: { head: ReactNode[]; children: 
             children
           ) : (
             <tr>
-              <td colSpan={head.length} className="px-3 py-6 text-center text-sm text-navy-200">
+              <td colSpan={head.length} className="px-3 py-6 text-center text-sm text-ink-200">
                 {empty ?? 'データがありません'}
               </td>
             </tr>
@@ -186,12 +186,12 @@ export function Table({ head, children, empty }: { head: ReactNode[]; children: 
   );
 }
 
-export const td = 'whitespace-nowrap px-3 py-2 text-navy-100';
+export const td = 'whitespace-nowrap px-3 py-2 text-ink-100';
 
 export function Loading() {
   return (
-    <div className="flex items-center justify-center gap-2 py-12 text-sm text-navy-200">
-      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/10 border-t-sky-300" aria-hidden />
+    <div className="flex items-center justify-center gap-2 py-12 text-sm text-ink-200">
+      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/10 border-t-white" aria-hidden />
       読み込み中…
     </div>
   );

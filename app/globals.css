@@ -25,34 +25,34 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ===== 研究コンソール: 透明感のある紺色のテーマ ===== */
-/* 紺色のスケール（bg-navy-900 などのユーティリティとして使える） */
+/* ===== 研究コンソール: 黒を基調にしたテーマ（半透明のすりガラス） ===== */
+/* 黒〜グレーの濃淡（bg-ink-900 などのユーティリティとして使える） */
 @theme {
-  --color-navy-50: #f1f4f9;
-  --color-navy-100: #e0e7f1;
-  --color-navy-200: #c2cfe3;
-  --color-navy-300: #94abcd;
-  --color-navy-400: #6382b3;
-  --color-navy-500: #41639a;
-  --color-navy-600: #2f4e83;
-  --color-navy-700: #243f6c;
-  --color-navy-800: #1a2f54;
-  --color-navy-900: #12223f;
-  --color-navy-950: #0b162b;
+  --color-ink-50: #f5f5f6;
+  --color-ink-100: #e6e6e9;
+  --color-ink-200: #c9c9cf;
+  --color-ink-300: #a3a3ab;
+  --color-ink-400: #7c7c86;
+  --color-ink-500: #5c5c65;
+  --color-ink-600: #45454d;
+  --color-ink-700: #33333a;
+  --color-ink-800: #232328;
+  --color-ink-900: #17171a;
+  --color-ink-950: #0b0b0d;
 }
 
 .research-root {
   position: relative;
   isolation: isolate;
   min-height: 100vh;
-  color: var(--color-navy-50);
+  color: var(--color-ink-50);
   color-scheme: dark; /* セレクトボックスやスクロールバーなどのネイティブ部品も暗色にする */
-  background-color: var(--color-navy-950);
+  background-color: #050506;
   font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-/* 透明感を出すための背景の光。画面に固定し、半透明のパネル越しに透けて見える */
+/* 透明感を出すための背景のごく淡い光。半透明のパネル越しに透けて見える */
 .research-root::before {
   content: '';
   position: fixed;
@@ -60,59 +60,57 @@ body {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(42rem 30rem at 92% 4%, rgb(59 130 246 / 0.40), transparent 62%),
-    radial-gradient(36rem 28rem at 18% 30%, rgb(56 189 248 / 0.22), transparent 62%),
-    radial-gradient(40rem 30rem at 60% 105%, rgb(99 102 241 / 0.28), transparent 62%),
-    linear-gradient(160deg, #0c1a34 0%, #081329 55%, #060f22 100%);
+    radial-gradient(40rem 28rem at 92% 0%, rgb(255 255 255 / 0.07), transparent 62%),
+    radial-gradient(36rem 26rem at 10% 35%, rgb(255 255 255 / 0.035), transparent 62%),
+    linear-gradient(160deg, #0d0d10 0%, #070708 55%, #040405 100%);
 }
 
-/* スクロール時の余白やオーバースクロールでも白が見えないよう、ページ全体を紺色にする */
+/* スクロール時の余白やオーバースクロールでも白が見えないよう、ページ全体を黒にする */
 html:has(.research-root),
 body:has(.research-root) {
-  background-color: var(--color-navy-950);
+  background-color: #050506;
 }
 
 .research-root input[type='checkbox'] {
-  accent-color: #5b8def;
+  accent-color: #e6e6e9;
 }
 
 .research-root ::selection {
-  background: rgb(91 141 239 / 0.35);
+  background: rgb(255 255 255 / 0.22);
 }
 
-/* 透明感のある紺色のパネル（すりガラス）。背景の光がうっすら透ける */
+/* 黒の半透明パネル（すりガラス） */
 .rc-glass {
-  background: linear-gradient(180deg, rgb(30 52 92 / 0.55), rgb(18 34 63 / 0.45));
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid rgb(148 171 205 / 0.18);
+  background: linear-gradient(180deg, rgb(32 32 36 / 0.62), rgb(20 20 23 / 0.55));
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid rgb(255 255 255 / 0.09);
   box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.08) inset,
-    0 12px 32px -16px rgb(0 0 0 / 0.6);
+    0 1px 0 rgb(255 255 255 / 0.06) inset,
+    0 12px 32px -16px rgb(0 0 0 / 0.8);
 }
 
-/* 主ボタン・アクティブ表示: 紺の中で目立つ明るめの青 */
+/* 主ボタン・アクティブ表示: 黒地に映える白 */
 .rc-primary {
-  color: #fff;
-  background-color: #2c62c9;
-  background-image: linear-gradient(180deg, rgb(255 255 255 / 0.12), transparent);
+  color: #0b0b0d;
+  background-color: #f5f5f6;
   box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.15) inset,
-    0 4px 12px -4px rgb(44 98 201 / 0.6);
+    0 1px 0 rgb(255 255 255 / 0.6) inset,
+    0 4px 14px -6px rgb(255 255 255 / 0.25);
 }
 
 .rc-primary:hover:not(:disabled) {
-  background-color: #3571df;
+  background-color: #ffffff;
 }
 
 .rc-primary:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
 }
 
-/* サイドバー: 濃いめの半透明の紺 */
+/* サイドバー: 本文より一段深い黒 */
 .rc-sidebar {
-  background: linear-gradient(180deg, rgb(10 21 41 / 0.78), rgb(6 13 25 / 0.82));
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border-right: 1px solid rgb(148 171 205 / 0.14);
+  background: linear-gradient(180deg, rgb(14 14 16 / 0.85), rgb(6 6 7 / 0.9));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgb(255 255 255 / 0.07);
 }

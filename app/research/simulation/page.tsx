@@ -63,9 +63,9 @@ export default function SimulationPage() {
           {r.judge && (
             <Card title="LLM Judge の評価">
               <p className="text-sm text-white">スコア: {r.judge.score ?? '—'} / 5</p>
-              <p className="mt-1 text-sm text-navy-200">{r.judge.summary || r.judge.parseError}</p>
+              <p className="mt-1 text-sm text-ink-200">{r.judge.summary || r.judge.parseError}</p>
               {r.judge.issues.length > 0 && (
-                <ul className="mt-2 list-disc pl-5 text-xs text-navy-200">
+                <ul className="mt-2 list-disc pl-5 text-xs text-ink-200">
                   {r.judge.issues.map((i, n) => (
                     <li key={n}>{i}</li>
                   ))}
@@ -77,7 +77,7 @@ export default function SimulationPage() {
             <DecisionTable decisions={r.decisions} />
           </Card>
           <Card title="適用した規則文書">
-            <pre className="whitespace-pre-wrap text-xs text-navy-100">{data.ruleDocument}</pre>
+            <pre className="whitespace-pre-wrap text-xs text-ink-100">{data.ruleDocument}</pre>
           </Card>
         </>
       )}

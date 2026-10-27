@@ -16,8 +16,8 @@ export default function DecisionTable({ decisions }: { decisions: TradeDecision[
           <td className={td}>{d.quantity}</td>
           <td className={td}>{d.action === 'hold' ? '—' : d.executed ? '約定' : <span className="text-rose-300">拒否</span>}</td>
           <td className={td}>{d.referencedRules.length ? d.referencedRules.map((n) => `第${n}条`).join('・') : '—'}</td>
-          <td className="px-3 py-2 text-xs text-rose-300">{d.violations.join(' / ') || <span className="text-navy-300">なし</span>}</td>
-          <td className="min-w-[16rem] px-3 py-2 text-xs text-navy-200">{d.parseError ? <span className="text-amber-300">出力を解釈できませんでした（{d.parseError}）</span> : d.rationale}</td>
+          <td className="px-3 py-2 text-xs text-rose-300">{d.violations.join(' / ') || <span className="text-ink-300">なし</span>}</td>
+          <td className="min-w-[16rem] px-3 py-2 text-xs text-ink-200">{d.parseError ? <span className="text-amber-300">出力を解釈できませんでした（{d.parseError}）</span> : d.rationale}</td>
         </tr>
       ))}
     </Table>

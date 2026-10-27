@@ -27,11 +27,11 @@ export default function SetupGuide({ providers, roles, compact }: { providers: P
       <ol className="mt-3 space-y-1.5">
         {steps.map((s, i) => (
           <li key={i} className="flex items-center gap-2 text-sm">
-            <span className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-xs ${s.done ? 'bg-emerald-600 text-white' : 'bg-navy-900 text-amber-200 ring-1 ring-amber-400/40'}`}>
+            <span className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-xs ${s.done ? 'bg-emerald-600 text-white' : 'bg-ink-900 text-amber-200 ring-1 ring-amber-400/40'}`}>
               {s.done ? '✓' : i + 1}
             </span>
             {s.done ? (
-              <span className="text-navy-200 line-through">{s.label}</span>
+              <span className="text-ink-200 line-through">{s.label}</span>
             ) : (
               <Link href={s.href} className="text-amber-200 underline underline-offset-2 hover:text-amber-200">
                 {s.label}

@@ -37,7 +37,7 @@ export const reasoningSupport: Record<ProviderType, 'effort' | 'thinkingBudget' 
 export const connectionStatusLabels: Record<ConnectionStatus, { label: string; className: string }> = {
   connected: { label: '接続済み', className: 'bg-emerald-500/10 text-emerald-300 ring-emerald-400/30' },
   failed: { label: '接続失敗', className: 'bg-rose-500/10 text-rose-300 ring-rose-400/30' },
-  unconfigured: { label: '未設定', className: 'bg-navy-800 text-navy-200 ring-navy-400/30' },
+  unconfigured: { label: '未設定', className: 'bg-ink-800 text-ink-200 ring-ink-400/30' },
   untested: { label: '未確認', className: 'bg-amber-500/10 text-amber-300 ring-amber-400/30' },
 };
 
@@ -70,12 +70,12 @@ export const roleLabels: Record<ResearchRole, { label: string; description: stri
 export const researchRoles: ResearchRole[] = ['trading_agent', 'llm_judge', 'auto_patch', 'document_analysis'];
 
 export const experimentStatusLabels: Record<ExperimentStatus, { label: string; className: string }> = {
-  queued: { label: '待機中', className: 'bg-navy-800 text-navy-200 ring-navy-400/30' },
-  running: { label: '実行中', className: 'bg-navy-800 text-sky-300 ring-sky-400/30' },
+  queued: { label: '待機中', className: 'bg-ink-800 text-ink-200 ring-ink-400/30' },
+  running: { label: '実行中', className: 'bg-ink-800 text-white ring-white/25' },
   pausing: { label: '一時停止中…', className: 'bg-amber-500/10 text-amber-300 ring-amber-400/30' },
   paused: { label: '一時停止', className: 'bg-amber-500/10 text-amber-300 ring-amber-400/30' },
-  stopping: { label: '停止中…', className: 'bg-navy-800 text-navy-200 ring-navy-400/30' },
-  stopped: { label: '停止', className: 'bg-navy-800 text-navy-200 ring-navy-400/30' },
+  stopping: { label: '停止中…', className: 'bg-ink-800 text-ink-200 ring-ink-400/30' },
+  stopped: { label: '停止', className: 'bg-ink-800 text-ink-200 ring-ink-400/30' },
   completed: { label: '完了', className: 'bg-emerald-500/10 text-emerald-300 ring-emerald-400/30' },
   failed: { label: '失敗', className: 'bg-rose-500/10 text-rose-300 ring-rose-400/30' },
 };

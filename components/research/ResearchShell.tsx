@@ -55,17 +55,17 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
   return (
     <SettingsContext.Provider value={basic}>
       <div className="research-root md:flex">
-        {/* デスクトップ: 紺色の固定サイドバー */}
-        <aside className="rc-sidebar sticky top-0 hidden h-screen w-64 flex-shrink-0 flex-col text-navy-100 md:flex">
+        {/* デスクトップ: 黒の固定サイドバー */}
+        <aside className="rc-sidebar sticky top-0 hidden h-screen w-64 flex-shrink-0 flex-col text-ink-100 md:flex">
           <Link href="/research" className="flex items-center gap-3 border-b border-white/10 px-5 py-5">
             <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rc-primary rounded-lg text-sm font-bold">R</span>
             <span className="min-w-0">
               <span className="block text-sm font-semibold leading-snug text-white [overflow-wrap:anywhere]">{basic.appDisplayName}</span>
-              <span className="block text-[11px] text-navy-300">Research Console</span>
+              <span className="block text-[11px] text-ink-300">Research Console</span>
             </span>
           </Link>
           <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
-            <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-navy-400">メニュー</p>
+            <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-ink-400">メニュー</p>
             {nav.map((item) => {
               const active = isActive(item.href, item.exact);
               return (
@@ -73,11 +73,11 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
                   <Link
                     href={item.href}
                     className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
-                      active ? 'bg-white/10 font-semibold text-white' : 'text-navy-200 hover:bg-white/5 hover:text-white'
+                      active ? 'bg-white/10 font-semibold text-white' : 'text-ink-200 hover:bg-white/5 hover:text-white'
                     }`}
                   >
-                    {active && <span className="absolute inset-y-1.5 left-0 w-1 rounded-r bg-sky-300" aria-hidden />}
-                    <Icon path={item.icon} className={`h-5 w-5 ${active ? 'text-sky-300' : 'text-navy-300 group-hover:text-white'}`} />
+                    {active && <span className="absolute inset-y-1.5 left-0 w-1 rounded-r bg-white" aria-hidden />}
+                    <Icon path={item.icon} className={`h-5 w-5 ${active ? 'text-white' : 'text-ink-300 group-hover:text-white'}`} />
                     {item.label}
                   </Link>
                   {item.href === '/research/settings' && isActive(item.href) && (
@@ -87,7 +87,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
                           key={s.href}
                           href={s.href}
                           className={`block rounded-md px-3 py-1.5 text-[13px] transition-colors ${
-                            pathname === s.href ? 'bg-white/10 font-semibold text-white' : 'text-navy-300 hover:text-white'
+                            pathname === s.href ? 'bg-white/10 font-semibold text-white' : 'text-ink-300 hover:text-white'
                           }`}
                         >
                           {s.label}
@@ -100,7 +100,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
             })}
           </nav>
           <div className="border-t border-white/10 px-5 py-4">
-            <p className="text-[11px] text-navy-400">ログイン中</p>
+            <p className="text-[11px] text-ink-400">ログイン中</p>
             <p className="mt-0.5 flex items-center gap-2 truncate text-sm text-white">
               <span className="h-2 w-2 rounded-full bg-emerald-400" aria-hidden />
               {principal}
@@ -109,7 +109,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
         </aside>
 
         <div className="min-w-0 flex-1">
-          {/* モバイル: 紺色のヘッダーと横スクロールのメニュー */}
+          {/* モバイル: 黒のヘッダーと横スクロールのメニュー */}
           <header className="rc-sidebar sticky top-0 z-30 text-white md:hidden">
             <div className="flex h-14 items-center gap-2.5 px-4">
               <span className="flex h-8 w-8 items-center justify-center rc-primary rounded-lg text-sm font-bold">R</span>
@@ -121,7 +121,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
                   key={item.href}
                   href={item.href}
                   className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${
-                    isActive(item.href, item.exact) ? 'border-sky-300 font-semibold text-white' : 'border-transparent text-navy-200'
+                    isActive(item.href, item.exact) ? 'border-white font-semibold text-white' : 'border-transparent text-ink-200'
                   }`}
                 >
                   {item.label}
@@ -131,17 +131,17 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
           </header>
 
           {/* デスクトップ: 現在位置を示す白いトップバー */}
-          <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-white/10 bg-navy-950/40 px-8 backdrop-blur-xl md:flex">
-            <p className="text-sm text-navy-300">
+          <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-white/10 bg-ink-950/40 px-8 backdrop-blur-xl md:flex">
+            <p className="text-sm text-ink-300">
               {basic.appDisplayName}
               {current && (
                 <>
-                  <span className="mx-2 text-navy-500">/</span>
+                  <span className="mx-2 text-ink-500">/</span>
                   <span className="font-semibold text-white">{current.label}</span>
                 </>
               )}
             </p>
-            <span className="flex items-center gap-2 rounded-full bg-navy-800 px-3 py-1 text-xs text-navy-100 ring-1 ring-navy-700">
+            <span className="flex items-center gap-2 rounded-full bg-ink-800 px-3 py-1 text-xs text-ink-100 ring-1 ring-ink-700">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
               {principal}
             </span>
@@ -162,7 +162,7 @@ export function SettingsTabs() {
         <Link
           key={s.href}
           href={s.href}
-          className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${pathname === s.href ? 'border-sky-300 font-semibold text-white' : 'border-transparent text-navy-200'}`}
+          className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${pathname === s.href ? 'border-white font-semibold text-white' : 'border-transparent text-ink-200'}`}
         >
           {s.label}
         </Link>

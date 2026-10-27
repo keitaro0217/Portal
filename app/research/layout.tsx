@@ -14,7 +14,7 @@ export default async function ResearchLayout({ children }: { children: React.Rea
   const auth = authenticateHeaders(await headers());
   if (!auth.ok) {
     return (
-      <div className="flex min-h-screen items-center justify-center research-root p-6 text-center text-sm text-navy-200">
+      <div className="flex min-h-screen items-center justify-center research-root p-6 text-center text-sm text-ink-200">
         {auth.reason === 'misconfigured' ? 'サーバーの認証設定が完了していません。管理者に連絡してください。' : '認証が必要です。ページを再読み込みしてください。'}
       </div>
     );

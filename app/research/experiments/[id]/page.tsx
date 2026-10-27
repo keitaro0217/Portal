@@ -15,9 +15,9 @@ type Detail = { experiment: Experiment; episodes: EpisodeResult[]; episodeCount:
 function RoleSnap({ label, r }: { label: string; r: RoleSnapshot | null }) {
   if (!r) return null;
   return (
-    <div className="rounded-xl border border-white/10 bg-navy-950/40 p-3 text-xs">
+    <div className="rounded-xl border border-white/10 bg-ink-950/40 p-3 text-xs">
       <p className="font-semibold text-white">{label}</p>
-      <dl className="mt-1 space-y-0.5 text-navy-200">
+      <dl className="mt-1 space-y-0.5 text-ink-200">
         <div>プロバイダー: {r.providerName}（{providerTypeLabels[r.providerType]}）</div>
         <div className="truncate">接続先: {r.baseUrl}</div>
         <div>モデル: <span className="font-mono">{r.model}</span></div>
@@ -76,7 +76,7 @@ export default function ExperimentDetailPage() {
 
   return (
     <div className="space-y-4">
-      <Link href="/research/experiments" className="text-xs text-navy-200 hover:text-sky-300">
+      <Link href="/research/experiments" className="text-xs text-ink-200 hover:text-white">
         ← 研究実験
       </Link>
       <PageHeader
@@ -113,11 +113,11 @@ export default function ExperimentDetailPage() {
       <Card>
         <div className="flex items-center justify-between text-sm">
           <Badge className={experimentStatusLabels[e.status].className}>{experimentStatusLabels[e.status].label}</Badge>
-          <span className="tabular-nums text-navy-200">
+          <span className="tabular-nums text-ink-200">
             {formatInt(done)} / {formatInt(e.episodes)} エピソード（{pct}%）
           </span>
         </div>
-        <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-navy-800">
+        <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-ink-800">
           <div className="rc-primary h-full rounded-full transition-all duration-500" style={{ width: `${pct}%` }} />
         </div>
       </Card>
@@ -134,15 +134,15 @@ export default function ExperimentDetailPage() {
           <RoleSnap label="取引エージェント" r={s.roles.trading_agent} />
           <RoleSnap label="LLM Judge" r={s.roles.llm_judge} />
         </div>
-        <dl className="mt-3 grid gap-1 text-xs text-navy-200 sm:grid-cols-2">
+        <dl className="mt-3 grid gap-1 text-xs text-ink-200 sm:grid-cols-2">
           <div>プロンプト: {s.prompts.promptVersion}</div>
           <div>ツール構成: {s.tools.toolVersion} / {s.tools.decisionFormat}</div>
           <div>市場: {s.market.steps}ステップ ・ 初期資金 {formatInt(s.market.initialCash)} ・ シード {e.seed}〜</div>
           <div>実行: 並列 {s.operational.episodeConcurrency} ・ 再試行 {s.operational.episodeRetries} ・ タイムアウト {s.operational.timeoutMs / 1000}秒</div>
         </dl>
         <details className="mt-3">
-          <summary className="cursor-pointer text-xs text-navy-200">規則文書を表示</summary>
-          <pre className="mt-2 whitespace-pre-wrap rounded-xl border border-white/10 bg-navy-950/40 p-3 text-xs text-navy-50">{s.ruleDocument}</pre>
+          <summary className="cursor-pointer text-xs text-ink-200">規則文書を表示</summary>
+          <pre className="mt-2 whitespace-pre-wrap rounded-xl border border-white/10 bg-ink-950/40 p-3 text-xs text-ink-50">{s.ruleDocument}</pre>
         </details>
       </Card>
 
@@ -179,8 +179,8 @@ export default function ExperimentDetailPage() {
             if (open === ep.index) {
               rows.push(
                 <tr key={`${ep.index}-detail`}>
-                  <td colSpan={9} className="bg-navy-950/40 p-3">
-                    {ep.judge && <p className="mb-2 text-xs text-navy-100">Judge: {ep.judge.summary || ep.judge.parseError}</p>}
+                  <td colSpan={9} className="bg-ink-950/40 p-3">
+                    {ep.judge && <p className="mb-2 text-xs text-ink-100">Judge: {ep.judge.summary || ep.judge.parseError}</p>}
                     <DecisionTable decisions={ep.decisions} />
                   </td>
                 </tr>,
