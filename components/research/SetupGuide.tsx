@@ -21,19 +21,19 @@ export default function SetupGuide({ providers, roles, compact }: { providers: P
   const steps = setupSteps(providers, roles);
   if (steps.every((s) => s.done)) return null;
   return (
-    <div className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 shadow-sm">
-      <p className="text-sm font-semibold text-amber-900">AI接続の設定が完了していません</p>
-      {!compact && <p className="mt-1 text-xs text-amber-800">研究実験を実行するには、以下の手順で接続情報を設定してください。ソースコードの編集は不要です。</p>}
+    <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-5 py-4 shadow-sm">
+      <p className="text-sm font-semibold text-amber-200">AI接続の設定が完了していません</p>
+      {!compact && <p className="mt-1 text-xs text-amber-200">研究実験を実行するには、以下の手順で接続情報を設定してください。ソースコードの編集は不要です。</p>}
       <ol className="mt-3 space-y-1.5">
         {steps.map((s, i) => (
           <li key={i} className="flex items-center gap-2 text-sm">
-            <span className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-xs ${s.done ? 'bg-emerald-600 text-white' : 'bg-white text-amber-800 ring-1 ring-amber-300'}`}>
+            <span className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full text-xs ${s.done ? 'bg-emerald-600 text-white' : 'bg-navy-900 text-amber-200 ring-1 ring-amber-400/40'}`}>
               {s.done ? '✓' : i + 1}
             </span>
             {s.done ? (
-              <span className="text-slate-600 line-through">{s.label}</span>
+              <span className="text-navy-200 line-through">{s.label}</span>
             ) : (
-              <Link href={s.href} className="text-amber-900 underline underline-offset-2 hover:text-amber-700">
+              <Link href={s.href} className="text-amber-200 underline underline-offset-2 hover:text-amber-200">
                 {s.label}
               </Link>
             )}

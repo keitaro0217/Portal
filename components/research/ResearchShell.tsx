@@ -58,7 +58,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
         {/* デスクトップ: 紺色の固定サイドバー */}
         <aside className="rc-sidebar sticky top-0 hidden h-screen w-64 flex-shrink-0 flex-col text-navy-100 md:flex">
           <Link href="/research" className="flex items-center gap-3 border-b border-white/10 px-5 py-5">
-            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-white text-sm font-bold text-navy-900 shadow">R</span>
+            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rc-primary rounded-lg text-sm font-bold">R</span>
             <span className="min-w-0">
               <span className="block text-sm font-semibold leading-snug text-white [overflow-wrap:anywhere]">{basic.appDisplayName}</span>
               <span className="block text-[11px] text-navy-300">Research Console</span>
@@ -112,7 +112,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
           {/* モバイル: 紺色のヘッダーと横スクロールのメニュー */}
           <header className="rc-sidebar sticky top-0 z-30 text-white md:hidden">
             <div className="flex h-14 items-center gap-2.5 px-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-bold text-navy-900">R</span>
+              <span className="flex h-8 w-8 items-center justify-center rc-primary rounded-lg text-sm font-bold">R</span>
               <span className="truncate text-sm font-semibold">{basic.appDisplayName}</span>
             </div>
             <nav className="flex gap-1 overflow-x-auto px-2">
@@ -131,17 +131,17 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
           </header>
 
           {/* デスクトップ: 現在位置を示す白いトップバー */}
-          <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-[#e3e8f0] bg-white/95 px-8 backdrop-blur md:flex">
-            <p className="text-sm text-slate-500">
+          <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-navy-800 bg-navy-950/90 px-8 backdrop-blur md:flex">
+            <p className="text-sm text-navy-300">
               {basic.appDisplayName}
               {current && (
                 <>
-                  <span className="mx-2 text-slate-300">/</span>
-                  <span className="font-semibold text-navy-900">{current.label}</span>
+                  <span className="mx-2 text-navy-500">/</span>
+                  <span className="font-semibold text-white">{current.label}</span>
                 </>
               )}
             </p>
-            <span className="flex items-center gap-2 rounded-full bg-navy-50 px-3 py-1 text-xs text-navy-800 ring-1 ring-navy-100">
+            <span className="flex items-center gap-2 rounded-full bg-navy-800 px-3 py-1 text-xs text-navy-100 ring-1 ring-navy-700">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
               {principal}
             </span>
@@ -157,12 +157,12 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
 export function SettingsTabs() {
   const pathname = usePathname();
   return (
-    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-[#e3e8f0] md:hidden">
+    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-navy-800 md:hidden">
       {settingsNav.map((s) => (
         <Link
           key={s.href}
           href={s.href}
-          className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${pathname === s.href ? 'border-navy-700 font-semibold text-navy-800' : 'border-transparent text-slate-600'}`}
+          className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${pathname === s.href ? 'border-sky-300 font-semibold text-white' : 'border-transparent text-navy-200'}`}
         >
           {s.label}
         </Link>

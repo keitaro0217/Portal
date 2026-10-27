@@ -48,11 +48,11 @@ export default function MarketFields({ form, onChange }: { form: MarketForm; onC
         <input className={inputClass} inputMode="numeric" value={form.maxPosition} onChange={(e) => set('maxPosition', e.target.value)} />
       </Field>
       <div className="flex flex-col justify-end gap-2 pb-1">
-        <label className="flex items-center gap-2 text-sm text-slate-700">
+        <label className="flex items-center gap-2 text-sm text-navy-100">
           <input type="checkbox" checked={form.allowShortSelling} onChange={(e) => set('allowShortSelling', e.target.checked)} />
           空売りを認める
         </label>
-        <label className="flex items-center gap-2 text-sm text-slate-700">
+        <label className="flex items-center gap-2 text-sm text-navy-100">
           <input type="checkbox" checked={form.judgeEnabled} onChange={(e) => set('judgeEnabled', e.target.checked)} />
           LLM Judge で各エピソードを評価する
         </label>

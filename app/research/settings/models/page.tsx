@@ -128,7 +128,7 @@ function RoleCard({ role, assignment, providers, onSaved }: { role: ResearchRole
         </Field>
       </div>
       <div className="mt-4 flex flex-wrap items-center justify-end gap-2">
-        {dirty && <span className="mr-auto text-xs text-amber-700">未保存の変更があります</span>}
+        {dirty && <span className="mr-auto text-xs text-amber-300">未保存の変更があります</span>}
         <Button onClick={test} busy={busy === 'test'} disabled={dirty || !assignment.providerId || !assignment.model}>
           この設定でテスト実行
         </Button>
@@ -137,7 +137,7 @@ function RoleCard({ role, assignment, providers, onSaved }: { role: ResearchRole
         </Button>
       </div>
       {testOutput && (
-        <pre className={`mt-3 whitespace-pre-wrap rounded-xl border p-3 text-xs ${testOutput.ok ? 'border-slate-200 bg-slate-50 text-slate-800' : 'border-rose-200 bg-rose-50 text-rose-900'}`}>{testOutput.text}</pre>
+        <pre className={`mt-3 whitespace-pre-wrap rounded-xl border p-3 text-xs ${testOutput.ok ? 'border-navy-700 bg-navy-950/40 text-navy-50' : 'border-rose-500/30 bg-rose-500/10 text-rose-200'}`}>{testOutput.text}</pre>
       )}
     </Card>
   );

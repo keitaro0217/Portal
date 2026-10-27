@@ -152,7 +152,7 @@ export default function ExecutionSettingsPage() {
               {jobs.map((e) => (
                 <tr key={e.id}>
                   <td className={td}>
-                    <Link href={`/research/experiments/${e.id}`} className="font-medium text-slate-900 hover:text-navy-700">
+                    <Link href={`/research/experiments/${e.id}`} className="font-medium text-white hover:text-sky-300">
                       {e.name}
                     </Link>
                   </td>

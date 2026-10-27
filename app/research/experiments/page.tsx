@@ -97,7 +97,7 @@ export default function ExperimentsPage() {
             <MarketFields form={market} onChange={setMarket} />
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-end gap-2">
-            {!ready && <span className="mr-auto text-xs text-amber-700">接続設定が未完了のため、開始時にエラーになる可能性があります。</span>}
+            {!ready && <span className="mr-auto text-xs text-amber-300">接続設定が未完了のため、開始時にエラーになる可能性があります。</span>}
             <Button onClick={() => setCreating(false)}>キャンセル</Button>
             <Button variant="primary" onClick={create} busy={busy}>
               実験を開始
@@ -113,7 +113,7 @@ export default function ExperimentsPage() {
             {experiments.map((e) => (
               <tr key={e.id}>
                 <td className={td}>
-                  <Link href={`/research/experiments/${e.id}`} className="font-medium text-slate-900 hover:text-navy-700">
+                  <Link href={`/research/experiments/${e.id}`} className="font-medium text-white hover:text-sky-300">
                     {e.name}
                   </Link>
                 </td>

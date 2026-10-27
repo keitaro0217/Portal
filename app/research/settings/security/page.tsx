@@ -6,16 +6,16 @@ import { useBasicSettings } from '@/components/research/ResearchShell';
 import { api, formatDate } from '@/lib/research/client';
 import type { AuditEntry, SecurityStatus } from '@/lib/research/types';
 
-const ok = 'bg-emerald-50 text-emerald-700 ring-emerald-600/20';
-const ng = 'bg-rose-50 text-rose-700 ring-rose-600/20';
-const warn = 'bg-amber-50 text-amber-700 ring-amber-600/20';
+const ok = 'bg-emerald-500/10 text-emerald-300 ring-emerald-400/30';
+const ng = 'bg-rose-500/10 text-rose-300 ring-rose-400/30';
+const warn = 'bg-amber-500/10 text-amber-300 ring-amber-400/30';
 
 function Row({ label, value, children }: { label: string; value: React.ReactNode; children?: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-1 py-3 sm:flex-row sm:items-start sm:justify-between">
       <div>
-        <p className="text-sm text-slate-900">{label}</p>
-        {children && <p className="mt-0.5 text-xs text-slate-600">{children}</p>}
+        <p className="text-sm text-white">{label}</p>
+        {children && <p className="mt-0.5 text-xs text-navy-200">{children}</p>}
       </div>
       <div className="flex-shrink-0">{value}</div>
     </div>
@@ -51,7 +51,7 @@ export default function SecurityPage() {
         </Alert>
       )}
       <Card title="アクセス制御">
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-navy-800">
           <Row label="Basic認証" value={<Badge className={s.basicAuth.enabled ? ok : warn}>{s.basicAuth.enabled ? '稼働中' : '無効（開発モード）'}</Badge>}>
             画面・APIのすべてで認証を要求し、バックエンドの各エンドポイントでも再検証します。
             {s.basicAuth.username && ` 利用者: ${s.basicAuth.username}`}
@@ -59,13 +59,13 @@ export default function SecurityPage() {
           <Row label="HTTPSの強制" value={<Badge className={s.basicAuth.httpsEnforced ? ok : warn}>{s.basicAuth.httpsEnforced ? '有効' : '開発環境のため無効'}</Badge>}>
             本番環境ではHTTPS以外のアクセスをリダイレクト・拒否し、HSTSを付与します。
           </Row>
-          <Row label="今後の拡張" value={<span className="text-xs text-slate-600">個別アカウント・権限管理・多要素認証</span>}>
+          <Row label="今後の拡張" value={<span className="text-xs text-navy-200">個別アカウント・権限管理・多要素認証</span>}>
             認証は差し替え可能な AuthProvider として実装されており、金融機関ごとのアカウント管理へ拡張できます。
           </Row>
         </div>
       </Card>
       <Card title="API認証情報の管理状況">
-        <div className="divide-y divide-slate-100">
+        <div className="divide-y divide-navy-800">
           <Row label="保存時の暗号化" value={<Badge className={s.encryption.configured ? ok : ng}>{s.encryption.configured ? s.encryption.algorithm : '未設定'}</Badge>}>
             APIキーはサーバー側で認証付き暗号により暗号化して保存し、ブラウザ・ログ・エラーメッセージ・監査ログには出力しません。
           </Row>

@@ -231,7 +231,7 @@ function ApiKeyEditor({ provider, onDone }: { provider: ProviderDTO; onDone: (p:
   };
 
   return (
-    <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
+    <div className="mt-3 rounded-xl border border-navy-700 bg-navy-950/40 p-3">
       <form
         className="flex flex-col gap-2 sm:flex-row"
         autoComplete="off"
@@ -257,28 +257,28 @@ function ApiKeyEditor({ provider, onDone }: { provider: ProviderDTO; onDone: (p:
           <Button onClick={() => onDone(null, null)}>閉じる</Button>
         </div>
       </form>
-      {error && <p className="mt-2 text-xs text-rose-600">{error}</p>}
-      <p className="mt-2 text-xs text-slate-600">APIキーはブラウザに保存されず、サーバーで暗号化して保管します。</p>
+      {error && <p className="mt-2 text-xs text-rose-300">{error}</p>}
+      <p className="mt-2 text-xs text-navy-200">APIキーはブラウザに保存されず、サーバーで暗号化して保管します。</p>
     </div>
   );
 }
 
 function TestResultView({ result }: { result: ConnectionTestResult }) {
   return (
-    <div className={`mt-3 rounded-xl border p-3 ${result.ok ? 'border-emerald-200 bg-emerald-50' : 'border-rose-200 bg-rose-50'}`}>
-      <p className={`text-sm font-medium ${result.ok ? 'text-emerald-800' : 'text-rose-800'}`}>
+    <div className={`mt-3 rounded-xl border p-3 ${result.ok ? 'border-emerald-500/30 bg-emerald-500/10' : 'border-rose-500/30 bg-rose-500/10'}`}>
+      <p className={`text-sm font-medium ${result.ok ? 'text-emerald-200' : 'text-rose-200'}`}>
         {result.ok ? '✓ 接続テストに成功しました' : `✕ ${result.errorCategory ? errorCategoryLabels[result.errorCategory] : '接続テストに失敗しました'}`}
-        {result.model && <span className="ml-2 text-xs font-normal text-slate-600">モデル: {result.model}</span>}
+        {result.model && <span className="ml-2 text-xs font-normal text-navy-200">モデル: {result.model}</span>}
       </p>
       <ol className="mt-2 space-y-1">
         {result.steps.map((s, i) => (
           <li key={s.key} className="flex gap-2 text-xs">
-            <span className={s.status === 'ok' ? 'text-emerald-700' : s.status === 'failed' ? 'text-rose-700' : 'text-slate-500'}>
+            <span className={s.status === 'ok' ? 'text-emerald-300' : s.status === 'failed' ? 'text-rose-300' : 'text-navy-300'}>
               {s.status === 'ok' ? '✓' : s.status === 'failed' ? '✕' : '–'}
             </span>
-            <span className="text-slate-700">
+            <span className="text-navy-100">
               {i + 1}. {s.label}
-              {s.message && <span className="text-slate-600">：{s.message}</span>}
+              {s.message && <span className="text-navy-200">：{s.message}</span>}
             </span>
           </li>
         ))}
@@ -371,42 +371,42 @@ function ProviderCard({ provider, onChange, onNotice }: { provider: ProviderDTO;
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-sm font-semibold text-slate-900">{provider.name}</h3>
+            <h3 className="text-sm font-semibold text-white">{provider.name}</h3>
             <Badge className={status.className}>{status.label}</Badge>
-            <span className="text-xs text-slate-600">{providerTypeLabels[provider.type]}</span>
+            <span className="text-xs text-navy-200">{providerTypeLabels[provider.type]}</span>
           </div>
           <dl className="mt-2 grid grid-cols-1 gap-x-6 gap-y-1 text-xs sm:grid-cols-2">
             <div className="flex gap-2 min-w-0">
-              <dt className="text-slate-600 flex-shrink-0">Base URL</dt>
-              <dd className="truncate font-mono text-slate-700">{provider.baseUrl}</dd>
+              <dt className="text-navy-200 flex-shrink-0">Base URL</dt>
+              <dd className="truncate font-mono text-navy-100">{provider.baseUrl}</dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-600">APIキー</dt>
-              <dd className="font-mono text-slate-700">
-                {provider.hasApiKey ? provider.apiKeyMasked : apiKeyRequired[provider.type] ? <span className="text-rose-600">未登録</span> : '不要'}
+              <dt className="text-navy-200">APIキー</dt>
+              <dd className="font-mono text-navy-100">
+                {provider.hasApiKey ? provider.apiKeyMasked : apiKeyRequired[provider.type] ? <span className="text-rose-300">未登録</span> : '不要'}
               </dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-600">既定モデル</dt>
-              <dd className="text-slate-700">{provider.defaultModel ?? '—'}</dd>
+              <dt className="text-navy-200">既定モデル</dt>
+              <dd className="text-navy-100">{provider.defaultModel ?? '—'}</dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-600">最終テスト</dt>
-              <dd className="text-slate-700">{formatDate(provider.connection.testedAt, basic)}</dd>
+              <dt className="text-navy-200">最終テスト</dt>
+              <dd className="text-navy-100">{formatDate(provider.connection.testedAt, basic)}</dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-600">タイムアウト / 再試行 / 同時実行</dt>
-              <dd className="text-slate-700">
+              <dt className="text-navy-200">タイムアウト / 再試行 / 同時実行</dt>
+              <dd className="text-navy-100">
                 {provider.timeoutMs / 1000}秒 / {provider.maxRetries}回 / {provider.maxConcurrency}
               </dd>
             </div>
             <div className="flex gap-2">
-              <dt className="text-slate-600">月間予算</dt>
-              <dd className="text-slate-700">{provider.monthlyBudgetUsd === null ? '上限なし' : `$${provider.monthlyBudgetUsd}`}</dd>
+              <dt className="text-navy-200">月間予算</dt>
+              <dd className="text-navy-100">{provider.monthlyBudgetUsd === null ? '上限なし' : `$${provider.monthlyBudgetUsd}`}</dd>
             </div>
           </dl>
           {provider.connection.status === 'failed' && provider.connection.message && !result && (
-            <p className="mt-2 text-xs text-rose-700">{provider.connection.message}</p>
+            <p className="mt-2 text-xs text-rose-300">{provider.connection.message}</p>
           )}
         </div>
         <div className="flex flex-wrap gap-2 sm:justify-end">
@@ -437,7 +437,7 @@ function ProviderCard({ provider, onChange, onNotice }: { provider: ProviderDTO;
         />
       )}
 
-      <div className="mt-4 flex flex-col gap-2 border-t border-slate-100 pt-4 sm:flex-row sm:items-center">
+      <div className="mt-4 flex flex-col gap-2 border-t border-navy-800 pt-4 sm:flex-row sm:items-center">
         <select className={`${inputClass} sm:max-w-xs`} value={testModel} onChange={(e) => setTestModel(e.target.value)} aria-label="テストするモデル">
           <option value="">{provider.defaultModel ? `既定モデル（${provider.defaultModel}）` : 'テストするモデルを選択'}</option>
           {provider.models.map((m) => (
@@ -454,7 +454,7 @@ function ProviderCard({ provider, onChange, onNotice }: { provider: ProviderDTO;
             接続テスト
           </Button>
         </div>
-        <span className="text-xs text-slate-600 sm:ml-auto">
+        <span className="text-xs text-navy-200 sm:ml-auto">
           {provider.modelsFetchedAt ? `モデル ${provider.models.length} 件（${formatDate(provider.modelsFetchedAt, basic)} 取得）` : 'モデル未取得'}
         </span>
       </div>

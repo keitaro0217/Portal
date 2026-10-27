@@ -56,16 +56,16 @@ export default function SimulationPage() {
         <>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             <Stat label="最終資産評価額" value={formatInt(r.finalValue)} sub={`モデル: ${data.model}`} />
-            <Stat label="損益" value={<span className={(r.pnl ?? 0) >= 0 ? 'text-emerald-700' : 'text-rose-700'}>{formatInt(r.pnl)}</span>} />
+            <Stat label="損益" value={<span className={(r.pnl ?? 0) >= 0 ? 'text-emerald-300' : 'text-rose-300'}>{formatInt(r.pnl)}</span>} />
             <Stat label="規則違反" value={r.violationCount} />
             <Stat label="費用（試算）" value={formatUsd(r.usage.costUsd, 6)} sub={`${r.usage.calls} 回呼び出し${r.usage.unpricedCalls ? ` ・ 料金未設定 ${r.usage.unpricedCalls}` : ''}`} />
           </div>
           {r.judge && (
             <Card title="LLM Judge の評価">
-              <p className="text-sm text-slate-900">スコア: {r.judge.score ?? '—'} / 5</p>
-              <p className="mt-1 text-sm text-slate-600">{r.judge.summary || r.judge.parseError}</p>
+              <p className="text-sm text-white">スコア: {r.judge.score ?? '—'} / 5</p>
+              <p className="mt-1 text-sm text-navy-200">{r.judge.summary || r.judge.parseError}</p>
               {r.judge.issues.length > 0 && (
-                <ul className="mt-2 list-disc pl-5 text-xs text-slate-600">
+                <ul className="mt-2 list-disc pl-5 text-xs text-navy-200">
                   {r.judge.issues.map((i, n) => (
                     <li key={n}>{i}</li>
                   ))}
@@ -77,7 +77,7 @@ export default function SimulationPage() {
             <DecisionTable decisions={r.decisions} />
           </Card>
           <Card title="適用した規則文書">
-            <pre className="whitespace-pre-wrap text-xs text-slate-700">{data.ruleDocument}</pre>
+            <pre className="whitespace-pre-wrap text-xs text-navy-100">{data.ruleDocument}</pre>
           </Card>
         </>
       )}
