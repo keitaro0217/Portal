@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
-// 研究コンソール共通のUI部品。画面全体を紺色の基調で統一し、明るい文字で読みやすさを確保する。
+// 研究コンソール共通のUI部品。透明感のある紺色（半透明のすりガラス）で統一し、明るい文字で読みやすさを確保する。
 // テーマの定義は app/globals.css の .research-root / .rc-* を参照。
 
 export function PageHeader({ title, description, actions }: { title: string; description?: string; actions?: ReactNode }) {
@@ -22,7 +22,7 @@ export function Card({ title, description, actions, children, className = '' }: 
   return (
     <section className={`rc-glass rounded-xl ${className}`}>
       {(title || actions) && (
-        <header className="flex flex-col gap-2 border-b border-navy-800 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <header className="flex flex-col gap-2 border-b border-white/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             {title && <h2 className="text-sm font-semibold tracking-wide text-white">{title}</h2>}
             {description && <p className="mt-0.5 text-xs text-navy-200">{description}</p>}
@@ -49,7 +49,7 @@ const alertStyles: Record<AlertKind, string> = {
   success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200',
   error: 'border-rose-500/30 bg-rose-500/10 text-rose-200',
   warning: 'border-amber-500/30 bg-amber-500/10 text-amber-200',
-  info: 'border-navy-700 bg-navy-900 text-navy-100',
+  info: 'border-white/10 bg-navy-900/50 text-navy-100',
 };
 
 export function Alert({ kind, title, children, onClose }: { kind: AlertKind; title?: string; children?: ReactNode; onClose?: () => void }) {
@@ -87,8 +87,8 @@ export function NoticeBar({ notice, onClose }: { notice: Notice; onClose: () => 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
 const buttonStyles: Record<ButtonVariant, string> = {
   primary: 'rc-primary',
-  secondary: 'bg-navy-900 text-navy-100 ring-1 ring-inset ring-navy-600 hover:bg-navy-800 hover:text-sky-300 disabled:text-navy-400',
-  danger: 'bg-navy-900 text-rose-300 ring-1 ring-inset ring-rose-400/50 hover:bg-rose-500/10 disabled:text-rose-300/50',
+  secondary: 'bg-white/5 text-navy-100 ring-1 ring-inset ring-white/15 hover:bg-white/10 hover:text-sky-300 disabled:text-navy-400',
+  danger: 'bg-white/5 text-rose-300 ring-1 ring-inset ring-rose-400/50 hover:bg-rose-500/10 disabled:text-rose-300/50',
   ghost: 'text-navy-200 hover:bg-navy-800 hover:text-sky-300 disabled:text-navy-500',
 };
 
@@ -126,7 +126,7 @@ export function Field({ label, hint, error, children, required }: { label: strin
 }
 
 export const inputClass =
-  'block w-full rounded-lg border-0 bg-navy-900 px-3 py-1.5 text-sm text-white ring-1 ring-inset ring-navy-600 transition placeholder:text-navy-400 focus:bg-navy-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-navy-500/50 disabled:bg-navy-950/40 disabled:text-navy-400';
+  'block w-full rounded-lg border-0 bg-navy-950/40 px-3 py-1.5 text-sm text-white ring-1 ring-inset ring-white/15 transition placeholder:text-navy-400 focus:bg-navy-950/60 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-navy-500/50 disabled:bg-navy-950/40 disabled:text-navy-400';
 
 export function Stat({ label, value, sub }: { label: string; value: ReactNode; sub?: ReactNode }) {
   return (
@@ -141,7 +141,7 @@ export function Stat({ label, value, sub }: { label: string; value: ReactNode; s
 
 export function EmptyState({ title, description, href, action }: { title: string; description: string; href?: string; action?: string }) {
   return (
-    <div className="rounded-xl border border-dashed border-navy-600 bg-navy-900 px-6 py-10 text-center">
+    <div className="rounded-xl border border-dashed border-white/20 bg-navy-900/40 px-6 backdrop-blur-md py-10 text-center">
       <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-navy-800 text-sky-300" aria-hidden>
         ＋
       </div>
@@ -162,7 +162,7 @@ export function Table({ head, children, empty }: { head: ReactNode[]; children: 
     <div className="overflow-x-auto">
       <table className="min-w-full text-sm">
         <thead>
-          <tr className="border-b border-navy-700 bg-navy-950/50 text-left text-xs font-semibold text-navy-100">
+          <tr className="border-b border-white/10 bg-navy-950/30 text-left text-xs font-semibold text-navy-100">
             {head.map((h, i) => (
               <th key={i} className="whitespace-nowrap px-3 py-2 font-medium">
                 {h}
@@ -170,7 +170,7 @@ export function Table({ head, children, empty }: { head: ReactNode[]; children: 
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-navy-800 [&>tr:hover]:bg-navy-800/50">
+        <tbody className="divide-y divide-white/5 [&>tr:hover]:bg-white/5">
           {hasRows ? (
             children
           ) : (
@@ -191,7 +191,7 @@ export const td = 'whitespace-nowrap px-3 py-2 text-navy-100';
 export function Loading() {
   return (
     <div className="flex items-center justify-center gap-2 py-12 text-sm text-navy-200">
-      <span className="h-4 w-4 animate-spin rounded-full border-2 border-navy-700 border-t-sky-300" aria-hidden />
+      <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/10 border-t-sky-300" aria-hidden />
       読み込み中…
     </div>
   );

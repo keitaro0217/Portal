@@ -15,7 +15,7 @@ type Detail = { experiment: Experiment; episodes: EpisodeResult[]; episodeCount:
 function RoleSnap({ label, r }: { label: string; r: RoleSnapshot | null }) {
   if (!r) return null;
   return (
-    <div className="rounded-xl border border-navy-700 bg-navy-950/40 p-3 text-xs">
+    <div className="rounded-xl border border-white/10 bg-navy-950/40 p-3 text-xs">
       <p className="font-semibold text-white">{label}</p>
       <dl className="mt-1 space-y-0.5 text-navy-200">
         <div>プロバイダー: {r.providerName}（{providerTypeLabels[r.providerType]}）</div>
@@ -142,7 +142,7 @@ export default function ExperimentDetailPage() {
         </dl>
         <details className="mt-3">
           <summary className="cursor-pointer text-xs text-navy-200">規則文書を表示</summary>
-          <pre className="mt-2 whitespace-pre-wrap rounded-xl border border-navy-700 bg-navy-950/40 p-3 text-xs text-navy-50">{s.ruleDocument}</pre>
+          <pre className="mt-2 whitespace-pre-wrap rounded-xl border border-white/10 bg-navy-950/40 p-3 text-xs text-navy-50">{s.ruleDocument}</pre>
         </details>
       </Card>
 

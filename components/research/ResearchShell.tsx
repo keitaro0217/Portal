@@ -131,7 +131,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
           </header>
 
           {/* デスクトップ: 現在位置を示す白いトップバー */}
-          <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-navy-800 bg-navy-950/90 px-8 backdrop-blur md:flex">
+          <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-white/10 bg-navy-950/40 px-8 backdrop-blur-xl md:flex">
             <p className="text-sm text-navy-300">
               {basic.appDisplayName}
               {current && (
@@ -157,7 +157,7 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
 export function SettingsTabs() {
   const pathname = usePathname();
   return (
-    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-navy-800 md:hidden">
+    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-white/10 md:hidden">
       {settingsNav.map((s) => (
         <Link
           key={s.href}

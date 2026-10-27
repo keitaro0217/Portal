@@ -231,7 +231,7 @@ function ApiKeyEditor({ provider, onDone }: { provider: ProviderDTO; onDone: (p:
   };
 
   return (
-    <div className="mt-3 rounded-xl border border-navy-700 bg-navy-950/40 p-3">
+    <div className="mt-3 rounded-xl border border-white/10 bg-navy-950/40 p-3">
       <form
         className="flex flex-col gap-2 sm:flex-row"
         autoComplete="off"
@@ -437,7 +437,7 @@ function ProviderCard({ provider, onChange, onNotice }: { provider: ProviderDTO;
         />
       )}
 
-      <div className="mt-4 flex flex-col gap-2 border-t border-navy-800 pt-4 sm:flex-row sm:items-center">
+      <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-4 sm:flex-row sm:items-center">
         <select className={`${inputClass} sm:max-w-xs`} value={testModel} onChange={(e) => setTestModel(e.target.value)} aria-label="テストするモデル">
           <option value="">{provider.defaultModel ? `既定モデル（${provider.defaultModel}）` : 'テストするモデルを選択'}</option>
           {provider.models.map((m) => (

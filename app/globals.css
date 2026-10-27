@@ -25,7 +25,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* ===== 研究コンソール: 画面全体を紺色で統一したテーマ ===== */
+/* ===== 研究コンソール: 透明感のある紺色のテーマ ===== */
 /* 紺色のスケール（bg-navy-900 などのユーティリティとして使える） */
 @theme {
   --color-navy-50: #f1f4f9;
@@ -42,14 +42,28 @@ body {
 }
 
 .research-root {
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
   color: var(--color-navy-50);
   color-scheme: dark; /* セレクトボックスやスクロールバーなどのネイティブ部品も暗色にする */
   background-color: var(--color-navy-950);
-  background-image: radial-gradient(60rem 36rem at 100% 0%, rgb(56 104 186 / 0.18), transparent 60%);
-  background-repeat: no-repeat;
   font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* 透明感を出すための背景の光。画面に固定し、半透明のパネル越しに透けて見える */
+.research-root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(42rem 30rem at 92% 4%, rgb(59 130 246 / 0.40), transparent 62%),
+    radial-gradient(36rem 28rem at 18% 30%, rgb(56 189 248 / 0.22), transparent 62%),
+    radial-gradient(40rem 30rem at 60% 105%, rgb(99 102 241 / 0.28), transparent 62%),
+    linear-gradient(160deg, #0c1a34 0%, #081329 55%, #060f22 100%);
 }
 
 /* スクロール時の余白やオーバースクロールでも白が見えないよう、ページ全体を紺色にする */
@@ -66,13 +80,15 @@ body:has(.research-root) {
   background: rgb(91 141 239 / 0.35);
 }
 
-/* 紺色のパネル。背景より一段明るくし、境界線で区切る */
+/* 透明感のある紺色のパネル（すりガラス）。背景の光がうっすら透ける */
 .rc-glass {
-  background: var(--color-navy-900);
-  border: 1px solid rgb(65 99 154 / 0.35);
+  background: linear-gradient(180deg, rgb(30 52 92 / 0.55), rgb(18 34 63 / 0.45));
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgb(148 171 205 / 0.18);
   box-shadow:
-    0 1px 0 rgb(255 255 255 / 0.04) inset,
-    0 8px 24px -12px rgb(0 0 0 / 0.5);
+    0 1px 0 rgb(255 255 255 / 0.08) inset,
+    0 12px 32px -16px rgb(0 0 0 / 0.6);
 }
 
 /* 主ボタン・アクティブ表示: 紺の中で目立つ明るめの青 */
@@ -93,9 +109,10 @@ body:has(.research-root) {
   opacity: 0.45;
 }
 
-/* サイドバー: 本文よりさらに深い紺 */
+/* サイドバー: 濃いめの半透明の紺 */
 .rc-sidebar {
-  background-color: #08111f;
-  background-image: linear-gradient(180deg, #0a1529, #060d19);
-  border-right: 1px solid rgb(65 99 154 / 0.25);
+  background: linear-gradient(180deg, rgb(10 21 41 / 0.78), rgb(6 13 25 / 0.82));
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-right: 1px solid rgb(148 171 205 / 0.14);
 }
