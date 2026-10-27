@@ -54,7 +54,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card title="APIプロバイダーの接続状態" actions={<Link href="/research/settings/api" className="text-xs text-slate-600 hover:text-rose-700">API連携へ →</Link>}>
+        <Card title="APIプロバイダーの接続状態" actions={<Link href="/research/settings/api" className="text-xs text-slate-600 hover:text-navy-700">API連携へ →</Link>}>
           {data.providers.length === 0 ? (
             <p className="text-sm text-slate-600">プロバイダーが登録されていません。</p>
           ) : (
@@ -73,7 +73,7 @@ export default function DashboardPage() {
             </ul>
           )}
         </Card>
-        <Card title="モデル割り当て" actions={<Link href="/research/settings/models" className="text-xs text-slate-600 hover:text-rose-700">変更 →</Link>}>
+        <Card title="モデル割り当て" actions={<Link href="/research/settings/models" className="text-xs text-slate-600 hover:text-navy-700">変更 →</Link>}>
           <ul className="divide-y divide-slate-100">
             {researchRoles.map((r) => (
               <li key={r} className="flex items-center justify-between gap-3 py-2 text-sm">
@@ -87,7 +87,7 @@ export default function DashboardPage() {
         </Card>
       </div>
 
-      <Card title="最近の実験" actions={<Link href="/research/experiments" className="text-xs text-slate-600 hover:text-rose-700">研究実験へ →</Link>}>
+      <Card title="最近の実験" actions={<Link href="/research/experiments" className="text-xs text-slate-600 hover:text-navy-700">研究実験へ →</Link>}>
         {data.experiments.length === 0 ? (
           <EmptyState title="実験はまだありません" description="研究実験画面から、取引エージェントの大量エピソード実験を開始できます。" href="/research/experiments" action="実験を作成" />
         ) : (
@@ -95,7 +95,7 @@ export default function DashboardPage() {
             {data.experiments.map((e) => (
               <tr key={e.id}>
                 <td className={td}>
-                  <Link href={`/research/experiments/${e.id}`} className="font-medium text-slate-900 hover:text-rose-700">
+                  <Link href={`/research/experiments/${e.id}`} className="font-medium text-slate-900 hover:text-navy-700">
                     {e.name}
                   </Link>
                 </td>

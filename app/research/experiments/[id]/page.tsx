@@ -76,7 +76,7 @@ export default function ExperimentDetailPage() {
 
   return (
     <div className="space-y-4">
-      <Link href="/research/experiments" className="text-xs text-slate-600 hover:text-rose-700">
+      <Link href="/research/experiments" className="text-xs text-slate-600 hover:text-navy-700">
         ← 研究実験
       </Link>
       <PageHeader

@@ -8,11 +8,27 @@ import type { BasicSettings } from '@/lib/research/types';
 const SettingsContext = createContext<BasicSettings | null>(null);
 export const useBasicSettings = () => useContext(SettingsContext);
 
+// アイコン（Heroicons outline 相当のパス）
+const icons = {
+  dashboard: 'M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6Zm0 9.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6Zm0 9.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z',
+  experiments: 'M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5',
+  simulation: 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z',
+  settings: 'M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894ZM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z',
+};
+
+function Icon({ path, className = 'h-5 w-5' }: { path: string; className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+      <path d={path} />
+    </svg>
+  );
+}
+
 const nav = [
-  { href: '/research', label: 'ダッシュボード', exact: true },
-  { href: '/research/experiments', label: '研究実験' },
-  { href: '/research/simulation', label: 'シミュレーション' },
-  { href: '/research/settings', label: '設定' },
+  { href: '/research', label: 'ダッシュボード', icon: icons.dashboard, exact: true },
+  { href: '/research/experiments', label: '研究実験', icon: icons.experiments },
+  { href: '/research/simulation', label: 'シミュレーション', icon: icons.simulation },
+  { href: '/research/settings', label: '設定', icon: icons.settings },
 ];
 
 export const settingsNav = [
@@ -24,54 +40,55 @@ export const settingsNav = [
   { href: '/research/settings/security', label: 'セキュリティ' },
 ];
 
-export default function ResearchShell({ basic, principal, children }: { basic: BasicSettings; principal: string; children: ReactNode }) {
+function useActive() {
   const pathname = usePathname();
-  const isActive = (href: string, exact?: boolean) => (exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`));
+  return {
+    pathname,
+    isActive: (href: string, exact?: boolean) => (exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`)),
+  };
+}
+
+export default function ResearchShell({ basic, principal, children }: { basic: BasicSettings; principal: string; children: ReactNode }) {
+  const { pathname, isActive } = useActive();
+  const current = settingsNav.find((s) => pathname === s.href) ?? nav.find((n) => isActive(n.href, n.exact));
 
   return (
     <SettingsContext.Provider value={basic}>
-      <div className="research-root relative">
-        <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
-          <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
-            <Link href="/research" className="flex min-w-0 items-center gap-2.5">
-              <span className="rc-primary flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl text-sm font-bold">R</span>
-              <span className="truncate text-sm font-bold tracking-wide text-slate-900">{basic.appDisplayName}</span>
-            </Link>
-            <span className="hidden items-center gap-2 truncate rounded-full bg-slate-50 px-3 py-1 text-xs text-slate-700 ring-1 ring-slate-200 sm:flex">
-              <span className="h-1.5 w-1.5 rounded-full bg-rose-500" aria-hidden />
-              ログイン中: {principal}
+      <div className="research-root md:flex">
+        {/* デスクトップ: 紺色の固定サイドバー */}
+        <aside className="rc-sidebar sticky top-0 hidden h-screen w-64 flex-shrink-0 flex-col text-navy-100 md:flex">
+          <Link href="/research" className="flex items-center gap-3 border-b border-white/10 px-5 py-5">
+            <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-white text-sm font-bold text-navy-900 shadow">R</span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold leading-snug text-white [overflow-wrap:anywhere]">{basic.appDisplayName}</span>
+              <span className="block text-[11px] text-navy-300">Research Console</span>
             </span>
-          </div>
-          <nav className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 md:hidden">
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${isActive(item.href, item.exact) ? 'border-rose-500 font-semibold text-rose-700' : 'border-transparent text-slate-600'}`}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </header>
-        <div className="relative z-10 mx-auto flex max-w-7xl gap-6 px-4 py-8">
-          <aside className="hidden w-56 flex-shrink-0 md:block">
-            <nav className="rc-glass sticky top-24 space-y-1 rounded-2xl p-2">
-              {nav.map((item) => (
+          </Link>
+          <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
+            <p className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-navy-400">メニュー</p>
+            {nav.map((item) => {
+              const active = isActive(item.href, item.exact);
+              return (
                 <div key={item.href}>
                   <Link
                     href={item.href}
-                    className={`block rounded-xl px-3 py-2 text-sm transition-colors ${isActive(item.href, item.exact) ? 'rc-primary font-semibold' : 'text-slate-700 hover:bg-slate-100 hover:text-rose-700'}`}
+                    className={`group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                      active ? 'bg-white/10 font-semibold text-white' : 'text-navy-200 hover:bg-white/5 hover:text-white'
+                    }`}
                   >
+                    {active && <span className="absolute inset-y-1.5 left-0 w-1 rounded-r bg-sky-300" aria-hidden />}
+                    <Icon path={item.icon} className={`h-5 w-5 ${active ? 'text-sky-300' : 'text-navy-300 group-hover:text-white'}`} />
                     {item.label}
                   </Link>
                   {item.href === '/research/settings' && isActive(item.href) && (
-                    <div className="mb-1 ml-4 mt-1.5 space-y-0.5 border-l border-slate-200 pl-3">
+                    <div className="mb-2 ml-6 mt-1 space-y-0.5 border-l border-white/10 pl-3">
                       {settingsNav.map((s) => (
                         <Link
                           key={s.href}
                           href={s.href}
-                          className={`block rounded-lg px-2 py-1.5 text-xs transition-colors ${pathname === s.href ? 'bg-rose-50 font-semibold text-rose-700' : 'text-slate-600 hover:text-rose-700'}`}
+                          className={`block rounded-md px-3 py-1.5 text-[13px] transition-colors ${
+                            pathname === s.href ? 'bg-white/10 font-semibold text-white' : 'text-navy-300 hover:text-white'
+                          }`}
                         >
                           {s.label}
                         </Link>
@@ -79,10 +96,58 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
                     </div>
                   )}
                 </div>
+              );
+            })}
+          </nav>
+          <div className="border-t border-white/10 px-5 py-4">
+            <p className="text-[11px] text-navy-400">ログイン中</p>
+            <p className="mt-0.5 flex items-center gap-2 truncate text-sm text-white">
+              <span className="h-2 w-2 rounded-full bg-emerald-400" aria-hidden />
+              {principal}
+            </p>
+          </div>
+        </aside>
+
+        <div className="min-w-0 flex-1">
+          {/* モバイル: 紺色のヘッダーと横スクロールのメニュー */}
+          <header className="rc-sidebar sticky top-0 z-30 text-white md:hidden">
+            <div className="flex h-14 items-center gap-2.5 px-4">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-sm font-bold text-navy-900">R</span>
+              <span className="truncate text-sm font-semibold">{basic.appDisplayName}</span>
+            </div>
+            <nav className="flex gap-1 overflow-x-auto px-2">
+              {nav.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${
+                    isActive(item.href, item.exact) ? 'border-sky-300 font-semibold text-white' : 'border-transparent text-navy-200'
+                  }`}
+                >
+                  {item.label}
+                </Link>
               ))}
             </nav>
-          </aside>
-          <main className="min-w-0 flex-1">{children}</main>
+          </header>
+
+          {/* デスクトップ: 現在位置を示す白いトップバー */}
+          <div className="sticky top-0 z-20 hidden h-14 items-center justify-between border-b border-[#e3e8f0] bg-white/95 px-8 backdrop-blur md:flex">
+            <p className="text-sm text-slate-500">
+              {basic.appDisplayName}
+              {current && (
+                <>
+                  <span className="mx-2 text-slate-300">/</span>
+                  <span className="font-semibold text-navy-900">{current.label}</span>
+                </>
+              )}
+            </p>
+            <span className="flex items-center gap-2 rounded-full bg-navy-50 px-3 py-1 text-xs text-navy-800 ring-1 ring-navy-100">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
+              {principal}
+            </span>
+          </div>
+
+          <main className="mx-auto max-w-6xl px-4 py-6 md:px-8 md:py-8">{children}</main>
         </div>
       </div>
     </SettingsContext.Provider>
@@ -92,12 +157,12 @@ export default function ResearchShell({ basic, principal, children }: { basic: B
 export function SettingsTabs() {
   const pathname = usePathname();
   return (
-    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-slate-200 md:hidden">
+    <nav className="mb-6 flex gap-1 overflow-x-auto border-b border-[#e3e8f0] md:hidden">
       {settingsNav.map((s) => (
         <Link
           key={s.href}
           href={s.href}
-          className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${pathname === s.href ? 'border-rose-500 font-semibold text-rose-700' : 'border-transparent text-slate-600'}`}
+          className={`whitespace-nowrap border-b-2 px-3 py-2 text-sm ${pathname === s.href ? 'border-navy-700 font-semibold text-navy-800' : 'border-transparent text-slate-600'}`}
         >
           {s.label}
         </Link>

@@ -71,7 +71,7 @@ export const researchRoles: ResearchRole[] = ['trading_agent', 'llm_judge', 'aut
 
 export const experimentStatusLabels: Record<ExperimentStatus, { label: string; className: string }> = {
   queued: { label: '待機中', className: 'bg-slate-100 text-slate-600 ring-slate-500/20' },
-  running: { label: '実行中', className: 'bg-rose-50 text-rose-700 ring-rose-500/30' },
+  running: { label: '実行中', className: 'bg-navy-50 text-navy-700 ring-navy-600/25' },
   pausing: { label: '一時停止中…', className: 'bg-amber-50 text-amber-700 ring-amber-600/20' },
   paused: { label: '一時停止', className: 'bg-amber-50 text-amber-700 ring-amber-600/20' },
   stopping: { label: '停止中…', className: 'bg-slate-100 text-slate-600 ring-slate-500/20' },

@@ -275,7 +275,7 @@ export default function CostsPage() {
             return (
               <tr key={e.id}>
                 <td className={td}>
-                  <Link href={`/research/experiments/${e.id}`} className="hover:text-rose-700">
+                  <Link href={`/research/experiments/${e.id}`} className="hover:text-navy-700">
                     {e.name}
                   </Link>
                 </td>

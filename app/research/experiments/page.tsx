@@ -113,7 +113,7 @@ export default function ExperimentsPage() {
             {experiments.map((e) => (
               <tr key={e.id}>
                 <td className={td}>
-                  <Link href={`/research/experiments/${e.id}`} className="font-medium text-slate-900 hover:text-rose-700">
+                  <Link href={`/research/experiments/${e.id}`} className="font-medium text-slate-900 hover:text-navy-700">
                     {e.name}
                   </Link>
                 </td>

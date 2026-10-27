@@ -3,18 +3,15 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
-// 研究コンソール共通のUI部品。明るいニュートラル基調で読みやすさを優先し、赤は操作要素のアクセントに使う。
+// 研究コンソール共通のUI部品。紺色を基調に、白いパネルと明るいグレーの背景で読みやすさを優先する。
 // テーマの定義は app/globals.css の .research-root / .rc-* を参照。
 
 export function PageHeader({ title, description, actions }: { title: string; description?: string; actions?: ReactNode }) {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <div className="flex items-center gap-2.5">
-          <span className="h-6 w-1.5 rounded-full rc-primary" aria-hidden />
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">{title}</h1>
-        </div>
-        {description && <p className="mt-2 max-w-3xl text-sm leading-relaxed text-slate-600">{description}</p>}
+        <h1 className="text-2xl font-bold tracking-tight text-navy-950">{title}</h1>
+        {description && <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-slate-600">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
@@ -23,11 +20,11 @@ export function PageHeader({ title, description, actions }: { title: string; des
 
 export function Card({ title, description, actions, children, className = '' }: { title?: string; description?: string; actions?: ReactNode; children: ReactNode; className?: string }) {
   return (
-    <section className={`rc-glass rounded-2xl ${className}`}>
+    <section className={`rc-glass rounded-xl ${className}`}>
       {(title || actions) && (
         <header className="flex flex-col gap-2 border-b border-slate-100 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            {title && <h2 className="text-sm font-semibold tracking-wide text-slate-900">{title}</h2>}
+            {title && <h2 className="text-sm font-semibold tracking-wide text-navy-900">{title}</h2>}
             {description && <p className="mt-0.5 text-xs text-slate-600">{description}</p>}
           </div>
           {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
@@ -90,9 +87,9 @@ export function NoticeBar({ notice, onClose }: { notice: Notice; onClose: () => 
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
 const buttonStyles: Record<ButtonVariant, string> = {
   primary: 'rc-primary',
-  secondary: 'bg-white text-slate-700 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 hover:text-rose-700 disabled:text-slate-500',
+  secondary: 'bg-white text-slate-700 ring-1 ring-inset ring-slate-300 hover:bg-slate-50 hover:text-navy-700 disabled:text-slate-500',
   danger: 'bg-white text-rose-700 ring-1 ring-inset ring-rose-300 hover:bg-rose-50 disabled:text-rose-300',
-  ghost: 'text-slate-600 hover:bg-slate-100 hover:text-rose-700 disabled:text-slate-300',
+  ghost: 'text-slate-600 hover:bg-slate-100 hover:text-navy-700 disabled:text-slate-300',
 };
 
 export function Button({
@@ -107,7 +104,7 @@ export function Button({
       type="button"
       {...props}
       disabled={props.disabled || busy}
-      className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-1.5 text-sm font-medium transition-all duration-150 active:scale-[0.98] disabled:cursor-not-allowed ${buttonStyles[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-1.5 rounded-md px-3.5 py-1.5 text-sm font-medium transition-colors disabled:cursor-not-allowed ${buttonStyles[variant]} ${className}`}
     >
       {busy && <span className="h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />}
       {children}
@@ -129,14 +126,14 @@ export function Field({ label, hint, error, children, required }: { label: strin
 }
 
 export const inputClass =
-  'block w-full rounded-lg border-0 bg-white px-3 py-1.5 text-sm text-slate-900 ring-1 ring-inset ring-slate-300 transition placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-rose-500/60 disabled:bg-slate-50 disabled:text-slate-600';
+  'block w-full rounded-lg border-0 bg-white px-3 py-1.5 text-sm text-slate-900 ring-1 ring-inset ring-slate-300 transition placeholder:text-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-navy-500/50 disabled:bg-slate-50 disabled:text-slate-600';
 
 export function Stat({ label, value, sub }: { label: string; value: ReactNode; sub?: ReactNode }) {
   return (
-    <div className="rc-glass relative overflow-hidden rounded-2xl px-4 py-3.5">
-      <span className="absolute inset-x-0 top-0 h-0.5 rc-primary opacity-70" aria-hidden />
+    <div className="rc-glass relative overflow-hidden rounded-xl py-4 pl-5 pr-4">
+      <span className="absolute inset-y-0 left-0 w-1 bg-navy-700" aria-hidden />
       <p className="text-xs font-medium text-slate-600">{label}</p>
-      <p className="mt-1.5 text-xl font-bold tabular-nums tracking-tight text-slate-900">{value}</p>
+      <p className="mt-1.5 text-2xl font-bold tabular-nums tracking-tight text-navy-950">{value}</p>
       {sub && <p className="mt-0.5 text-xs text-slate-600">{sub}</p>}
     </div>
   );
@@ -144,8 +141,8 @@ export function Stat({ label, value, sub }: { label: string; value: ReactNode; s
 
 export function EmptyState({ title, description, href, action }: { title: string; description: string; href?: string; action?: string }) {
   return (
-    <div className="rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-10 text-center">
-      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-rose-50 text-rose-600" aria-hidden>
+    <div className="rounded-xl border border-dashed border-navy-200 bg-white px-6 py-10 text-center">
+      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-navy-50 text-navy-600" aria-hidden>
         ＋
       </div>
       <p className="text-sm font-semibold text-slate-900">{title}</p>
@@ -165,7 +162,7 @@ export function Table({ head, children, empty }: { head: ReactNode[]; children: 
     <div className="overflow-x-auto">
       <table className="min-w-full text-sm">
         <thead>
-          <tr className="border-b border-slate-200 bg-slate-50 text-left text-xs font-semibold text-slate-600">
+          <tr className="border-b border-navy-100 bg-navy-50/70 text-left text-xs font-semibold text-navy-800">
             {head.map((h, i) => (
               <th key={i} className="whitespace-nowrap px-3 py-2 font-medium">
                 {h}
@@ -194,7 +191,7 @@ export const td = 'whitespace-nowrap px-3 py-2 text-slate-700';
 export function Loading() {
   return (
     <div className="flex items-center justify-center gap-2 py-12 text-sm text-slate-600">
-      <span className="h-4 w-4 animate-spin rounded-full border-2 border-rose-300 border-t-rose-600" aria-hidden />
+      <span className="h-4 w-4 animate-spin rounded-full border-2 border-navy-200 border-t-navy-700" aria-hidden />
       読み込み中…
     </div>
   );
